@@ -17,7 +17,7 @@ at = AppTest.from_file("../app/dashboard.py", default_timeout=120).run()
 assert not at.exception, at.exception
 print("tabs:", len(at.tabs), "| metrics:", [m.value for m in at.metric][:5])
 
-search = next(b for b in at.button if b.label == "Search")
+search = next(b for b in at.button if b.label == "Search reviews")
 at.text_input[0].set_value("faltando item recebi apenas um")
 search.click().run()
 assert not at.exception, at.exception

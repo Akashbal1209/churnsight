@@ -110,6 +110,41 @@ def main() -> None:
     print(f"{len(neg)} complaints -> {len(out)} clusters, outliers {meta['outlier_share']:.1%}")
     for c in out:
         print(c["cluster"], c["size"], ", ".join(c["keywords"][:6]))
+    label_clusters()
+
+
+# Plain-English names for non-technical readers, derived from the fine-tuned topic classifier.
+PLAIN = {
+    "delivery_delay": "Delivery took too long",
+    "not_received": "Order never arrived",
+    "fast_delivery": "Delivery timing",
+    "defect_quality": "Broken or poor quality",
+    "wrong_missing_item": "Wrong or missing item",
+    "good_quality": "Product not as expected",
+    "support_refund": "Refund, return or no reply",
+    "praise_recommend": "Mixed feelings",
+}
+
+
+def label_clusters(min_share: float = 0.3) -> None:
+    """Name each cluster by the topic most of its reviews carry (no LLM needed)."""
+    import pandas as pd
+
+    from churnsight.nlp.weak_labels import TOPICS, topic_thresholds
+
+    path = ARTIFACTS / "complaint_clusters.json"
+    meta = json.loads(path.read_text(encoding="utf-8"))
+    th = topic_thresholds()
+    df = pd.read_parquet(PROCESSED / "complaint_clusters.parquet").merge(
+        pd.read_parquet(PROCESSED / "review_nlp.parquet"), on="review_id")
+    for c in meta["clusters"]:
+        sub = df[df["cluster"] == c["cluster"]]
+        shares = {t: float((sub[f"topic_{t}"] >= th[t]).mean()) for t in TOPICS if t not in ("fast_delivery", "praise_recommend")}
+        ranked = sorted(shares.items(), key=lambda kv: -kv[1])
+        top, share = ranked[0]
+        c["plain_name"] = PLAIN[top] if share >= min_share else "Other complaints"
+        c["topic_shares"] = {t: round(s, 3) for t, s in ranked}
+    path.write_text(encoding="utf-8", data=json.dumps(meta, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

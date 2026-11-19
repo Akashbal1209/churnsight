@@ -180,6 +180,12 @@ def main() -> None:
     scores["split"] = np.where(c["purchase_date"] >= cutoff, "test", "train")
     scores.to_parquet(PROCESSED / "customer_scores.parquet", index=False)
 
+    # Cumulative gains on the test period: share of returners found when calling the top X%.
+    t = scores[scores["split"] == "test"].sort_values("p_repurchase", ascending=False)
+    cum = t["repurchased"].cumsum() / max(t["repurchased"].sum(), 1)
+    gains = {f"{q}": round(float(cum.iloc[max(int(len(t) * q / 100) - 1, 0)]), 4) for q in range(10, 101, 10)}
+    (ARTIFACTS / "gains.json").write_text(encoding="utf-8", data=json.dumps(gains, indent=2))
+
     survival(pd.read_parquet(PROCESSED / "customers.parquet"))
 
     out = {
