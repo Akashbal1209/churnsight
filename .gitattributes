@@ -1,0 +1,8 @@
+# Consistent line endings across Windows, macOS and Linux
+* text=auto
+
+# Binary files
+*.parquet binary
+*.npy binary
+*.png binary
+*.jpg binary
