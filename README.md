@@ -16,11 +16,11 @@ Built on the public [Olist Brazilian E-commerce dataset](https://www.kaggle.com/
 |---|---|
 | Data | 96,470 delivered orders · 93,350 customers · 34,340 clean text reviews (Portuguese) |
 | Retention reality | **97% of customers buy once**; only **1.55%** return between day 30 and day 210 |
-| Review topic classifier (gold set, 250 reviews) | Topic macro-F1 **0.835** (fine-tuned BERTimbau, two-stage) vs **0.636** keyword rules and **0.666** TF-IDF |
+| Review topic classifier (held-out gold set, 250 reviews) | Topic macro-F1 **0.835** (fine-tuned BERTimbau, two-stage) vs **0.636** keyword rules and **0.666** TF-IDF |
 | Retrieval (16 EN + PT queries, exact relevance) | Hybrid nDCG@10 **0.79**; BM25 alone fails on English questions (**0.09**) |
 | Complaint discovery | **28 recurring complaint clusters** from 8,860 1-2★ reviews (2% unassigned) |
 | Rising-issue alerts (backtest) | Flags **Nov 2017** ("order not received" +194%, z = 14.5) and **Feb-Mar 2018**, the exact months the late-delivery rate jumped from 5% to 14-21% in order data the NLP never saw |
-| Retention model | ROC-AUC **0.564**, **1.7× lift** in the top 10% (time-based split) |
+| Retention model | ROC-AUC **0.564**, **1.6× lift** in the top 10%; contacting the top 20% finds 24% of returners (time-based split) |
 | Survival | A 1-2★ first review means a **14% lower return hazard** (Cox HR 0.86, p = 0.016) |
 
 ### Review classifier: what moved the needle
@@ -67,7 +67,7 @@ ChurnSight joins them per customer, so it can answer the question a business act
 | 2. Segmentation | 5 actionable customer segments | RFM + experience features, KMeans, silhouette vs usefulness trade-off |
 | 3. Retention model | Who comes back after the first order, and why | Point-in-time features, LightGBM, **SHAP**, Kaplan-Meier + **Cox** survival |
 | 4. Issue impact | Repurchase gap and revenue at stake per complaint topic; seller hotspots; rising-issue alerts | Bootstrap CIs, z-score spike detection |
-| 5. Ask ChurnSight (RAG) | Ask questions in English about Portuguese reviews, answered with verified citations | Hybrid retrieval (BM25 + dense, RRF), cross-encoder rerank, metadata filters, **LLM** |
+| 5. Ask ChurnSight (RAG) | Ask questions in English about Portuguese reviews, answered with verified citations | Hybrid retrieval (BM25 + dense, RRF), optional cross-encoder rerank, metadata filters, **LLM** answer with citation checks |
 | 6. Action Center | Prioritised queue of unhappy customers with a policy-grounded reply draft | Rule engine for priority/vouchers, policy RAG, LLM structured output, guardrails |
 
 Delivered as a **Streamlit dashboard** and a **FastAPI** service.
@@ -97,11 +97,11 @@ orders / customers / reviews (parquet)
 
 - **Point-in-time features (no leakage).** Every customer is scored 30 days after their first purchase, using only what was known by then (delivery status, a review written by day 30). The label is "returned between day 30 and day 210". An earlier version masked reviews written *after* a second purchase; that masking only ever hit returning customers, so "review missing" leaked the label. The fixed cut-off applies to everyone equally.
 - **Same-day orders are not retention.** About 30% of raw "second orders" were placed the same day as the first (basket splits). A return needs to be at least 1 day later.
-- **Weak supervision instead of hand-labelling 30k reviews.** Portuguese keyword rules label the training set; a fine-tuned transformer learns to generalise beyond the keywords. Everything is evaluated on a separate, hand-labelled gold set of 250 reviews (50 per star rating) that is never used for training.
+- **Weak supervision instead of hand-labelling 30k reviews.** Portuguese keyword rules label the training set; a fine-tuned transformer learns to generalise beyond the keywords. Everything is evaluated on a separate gold set of 250 reviews (50 per star rating), annotated with an LLM against a written guideline and never used for training.
 - **Usefulness over a single metric.** Silhouette prefers k=3 segments, but that puts ~80% of customers in one group. We pick the best k ≥ 5 and say so.
 - **Rules decide money, the LLM writes words.** In the Action Center the voucher amount comes from a rule engine that mirrors the goodwill policy. The LLM only drafts the reply. Guardrails reject drafts that change the amount, cite policies that were not retrieved, mention unapproved R$ amounts, or skip escalation on legal/safety language.
 - **Exact search over an ANN index.** ~34k × 384-dim vectors: brute-force cosine takes milliseconds, so a vector database would add moving parts without benefit at this scale.
-- **Works without an API key.** With `LLM_PROVIDER=none` every LLM feature falls back to retrieval-only or cached outputs, so the dashboard, API and tests run anywhere.
+- **Works without an API key.** With `LLM_PROVIDER=none` every LLM feature falls back to retrieval-only or rule-based output, so the dashboard, API and tests run anywhere. The live demo runs this way.
 
 ## Run it
 
@@ -115,7 +115,7 @@ pip install -r requirements-dev.txt && pip install -e .
 python -m churnsight.pipeline
 
 # 3. Optional: LLM-powered features
-copy .env.example .env      # set LLM_PROVIDER=anthropic and ANTHROPIC_API_KEY
+copy .env.example .env      # set LLM_PROVIDER=anthropic, LLM_MODEL and ANTHROPIC_API_KEY
 python -m churnsight.llm.insights          # name complaint clusters
 python -m churnsight.llm.queue --draft 10  # pre-draft demo replies
 
@@ -144,7 +144,7 @@ src/churnsight/
   llm/                     LLM client, cluster insights, Action Center, outreach queue
 app/                       Streamlit dashboard, FastAPI
 docs/policies/             synthetic policy knowledge base for a fictional marketplace
-data/labels/               gold annotations (hand-labelled evaluation set)
+data/labels/               gold (evaluation) and silver (training) annotations
 artifacts/                 metrics, tables and figures produced by the pipeline
 tests/                     unit tests for rules, guardrails, spike detection
 ```
@@ -153,4 +153,4 @@ tests/                     unit tests for rules, guardrails, spike detection
 
 - Olist Brazilian E-commerce Public Dataset by Olist, [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). The slim bundle in `data/app/` is derived from it and shared under the same licence, for non-commercial use.
 - `docs/policies/` describes **Aurora Marketplace, a fictional company** invented for this demo. It is not Olist's policy.
-- Gold labels in `data/labels/gold_annotations.txt` were produced with an LLM reading each review, single pass; treat them as a careful but unaudited reference.
+- Gold labels in `data/labels/gold_annotations.txt` were produced with an LLM reading each review against a written guideline, single pass; treat them as a careful but unaudited reference.

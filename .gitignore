@@ -26,8 +26,6 @@ mlruns/
 *.bin
 *.safetensors
 
-# Local tool config (machine-specific paths)
-
 # OS / editors
 .DS_Store
 Thumbs.db

@@ -1,9 +1,9 @@
-﻿"""Fine-tune a Portuguese BERT (BERTimbau) for multi-label review topics + negativity.
+"""Fine-tune a Portuguese BERT (BERTimbau) for multi-label review topics + negativity.
 
 Labels
   weak    Portuguese keyword rules on ~30k reviews (noisy, high coverage)
   silver  600 LLM-assisted labels (data/labels/silver.csv): 480 for training, 120 held out
-  gold    250 hand-checked reviews (data/labels/gold.csv): evaluation ONLY
+  gold    250 LLM-annotated reviews, 50 per star rating (data/labels/gold.csv): evaluation ONLY
 "negative" is review_score <= 2 everywhere.
 
 Two-stage training

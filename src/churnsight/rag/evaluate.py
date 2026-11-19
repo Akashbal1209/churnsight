@@ -1,6 +1,6 @@
 """Retrieval evaluation with exact relevance labels.
 
-The corpus is the 250 hand-labelled gold reviews, so for every query we know exactly which
+The corpus is the 250 gold reviews (LLM-annotated, held out from training), so for every query we know exactly which
 documents are relevant (those carrying the query's topic). Each topic gets one English and one
 Portuguese query, which also tests cross-lingual retrieval (English question -> Portuguese review).
 
@@ -95,7 +95,7 @@ def main() -> None:
     summary = summary.join(by_lang.add_prefix("ndcg@10_"))
     summary.to_csv(ARTIFACTS / "retrieval_eval.csv")
     (ARTIFACTS / "retrieval_eval.json").write_text(encoding="utf-8", data=
-        json.dumps({"corpus": "250 hand-labelled gold reviews", "n_queries": len(df) // len(configs),
+        json.dumps({"corpus": "250 gold reviews (LLM-annotated)", "n_queries": len(df) // len(configs),
                     "summary": summary.reset_index().to_dict(orient="records")}, indent=2)
     )
     print(summary.to_string())

@@ -1,5 +1,5 @@
 {
-  "final_variant": "C. + review NLP (topics, sentiment)",
+  "final_variant": "B. + review score",
   "time_split_cutoff": "2017-11-30",
   "n_train": 36602,
   "n_test": 12201,
@@ -33,15 +33,15 @@
     }
   ],
   "top_shap_features": {
-    "category": 0.15834,
-    "purchase_month": 0.07151,
-    "freight": 0.04269,
-    "payment_value": 0.03936,
-    "customer_state": 0.039,
-    "delivery_days": 0.03571,
-    "freight_ratio": 0.03434,
-    "review_score": 0.02958,
-    "installments": 0.02745,
-    "promised_days": 0.02122
+    "category": 0.10187,
+    "purchase_month": 0.04405,
+    "payment_value": 0.03002,
+    "review_score": 0.02496,
+    "customer_state": 0.024,
+    "freight": 0.02288,
+    "promised_days": 0.01965,
+    "freight_ratio": 0.01719,
+    "installments": 0.01695,
+    "delivery_days": 0.01692
   }
 }

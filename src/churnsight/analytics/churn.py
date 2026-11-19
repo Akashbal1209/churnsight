@@ -154,11 +154,13 @@ def main() -> None:
     if nlp_cols:
         variants["C. + review NLP (topics, sentiment)"] = ORDER_FEATURES + REVIEW_SCORE_FEATURES + nlp_cols
 
-    rows, best = [], None
+    # Keep the variant with the best test ROC-AUC as the final model (scores, SHAP, gains).
+    rows, best, best_auc = [], None, -1.0
     for name, feats in variants.items():
         model, p, m = fit_eval(train, test, feats)
         rows.append({"variant": name, "n_features": len(feats), **m})
-        best = (name, model, feats, p)
+        if m["roc_auc"] > best_auc:
+            best, best_auc = (name, model, feats, p), m["roc_auc"]
         print(name, m)
     ablation = pd.DataFrame(rows)
     ablation.to_csv(ARTIFACTS / "churn_ablation.csv", index=False)

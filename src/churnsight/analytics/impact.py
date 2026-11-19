@@ -23,8 +23,6 @@ from churnsight.config import ARTIFACTS, PREDICTION_DAY, PROCESSED, RANDOM_SEED,
 from churnsight.nlp.weak_labels import TOPICS, topic_thresholds
 
 
-
-
 def _topic_flags(nlp: pd.DataFrame) -> pd.DataFrame:
     flags = nlp[["review_id"]].copy()
     th = topic_thresholds()
@@ -112,7 +110,7 @@ def trends_and_alerts(reviews: pd.DataFrame, flags: pd.DataFrame, lookback: int 
     monthly["n_reviews"] = r.groupby("order_month").size()
     complaints = ["delivery_delay", "not_received", "defect_quality", "wrong_missing_item", "support_refund"]
     alerts = detect_spikes(monthly[complaints], lookback, z_thresh)
-    # Backtest: what would the weekly report have flagged at the end of each past month?
+    # Backtest: what would a monthly check have flagged at the end of each past month?
     history = []
     for i in range(lookback + 1, len(monthly) + 1):
         history += detect_spikes(monthly[complaints].iloc[:i], lookback, z_thresh)

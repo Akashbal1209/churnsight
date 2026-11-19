@@ -6,7 +6,7 @@ Every quote is checked against the cluster's reviews (accent/case-insensitive su
 quotes that do not appear are dropped and counted as hallucinations.
 
 Output: artifacts/cluster_insights.json
-Run:  python -m churnsight.llm.insights     (requires LLM_PROVIDER=anthropic)
+Run:  python -m churnsight.llm.insights     (requires an LLM key, see .env.example)
 """
 
 from __future__ import annotations
@@ -83,5 +83,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     if not client.available():
-        raise SystemExit("LLM disabled: set LLM_PROVIDER=anthropic in .env to generate cluster insights.")
+        raise SystemExit("LLM disabled: set LLM_PROVIDER, LLM_MODEL and ANTHROPIC_API_KEY in .env to generate cluster insights.")
     main()

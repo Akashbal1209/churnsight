@@ -18,8 +18,6 @@ from churnsight.llm.actions import Case, prioritise, suggest
 from churnsight.nlp.weak_labels import TOPICS, topic_thresholds
 
 
-
-
 def build_queue() -> pd.DataFrame:
     customers = pd.read_parquet(PROCESSED / "customers.parquet")
     reviews = pd.read_parquet(PROCESSED / "reviews.parquet")[["review_id", "review_text", "order_month", "category"]]

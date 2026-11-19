@@ -1,8 +1,8 @@
 """Thin wrapper around the Anthropic Messages API.
 
-- LLM_PROVIDER=anthropic -> live calls via the official SDK (credentials: ANTHROPIC_API_KEY or an
-  `ant auth login` profile). LLM_PROVIDER=none (default) -> callers fall back to cached outputs,
-  so the dashboard and tests run without any key.
+- LLM_PROVIDER=anthropic -> live calls via the official SDK (needs ANTHROPIC_API_KEY and LLM_MODEL).
+  LLM_PROVIDER=none (default) -> callers fall back to cached outputs, so the dashboard and tests
+  run without any key.
 - Structured outputs (output_config.format json_schema) guarantee parseable JSON.
 - Server-side refusal fallback is enabled; refusals are surfaced as LLMRefusal.
 - The system prompt is marked for prompt caching (stable prefix, reused across many calls).
@@ -20,7 +20,6 @@ from churnsight.config import ROOT
 
 load_dotenv(ROOT / ".env")
 
-DEFAULT_MODEL = ""
 FALLBACK_BETA = "server-side-fallback-2026-07-01"
 
 
@@ -37,11 +36,11 @@ def provider() -> str:
 
 
 def model() -> str:
-    return os.getenv("LLM_MODEL", "").strip() or DEFAULT_MODEL
+    return os.getenv("LLM_MODEL", "").strip()
 
 
 def available() -> bool:
-    if provider() != "anthropic":
+    if provider() != "anthropic" or not model():
         return False
     try:
         import anthropic  # noqa: F401
@@ -56,7 +55,7 @@ _client = None
 def _get_client():
     global _client
     if not available():
-        raise LLMUnavailable("Set LLM_PROVIDER=anthropic (and credentials) to enable live LLM calls.")
+        raise LLMUnavailable("Set LLM_PROVIDER=anthropic, LLM_MODEL and ANTHROPIC_API_KEY to enable live LLM calls.")
     if _client is None:
         import anthropic
 

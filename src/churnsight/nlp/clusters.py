@@ -25,6 +25,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from umap import UMAP
 
 from churnsight.config import ARTIFACTS, PROCESSED, RANDOM_SEED
+from churnsight.nlp.weak_labels import TOPICS, topic_thresholds
 
 EMBED_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
@@ -128,10 +129,6 @@ PLAIN = {
 
 def label_clusters(min_share: float = 0.3) -> None:
     """Name each cluster by the topic most of its reviews carry (no LLM needed)."""
-    import pandas as pd
-
-    from churnsight.nlp.weak_labels import TOPICS, topic_thresholds
-
     path = ARTIFACTS / "complaint_clusters.json"
     meta = json.loads(path.read_text(encoding="utf-8"))
     th = topic_thresholds()

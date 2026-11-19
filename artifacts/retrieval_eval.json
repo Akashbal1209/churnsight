@@ -1,5 +1,5 @@
 {
-  "corpus": "250 hand-labelled gold reviews",
+  "corpus": "250 gold reviews (LLM-annotated)",
   "n_queries": 16,
   "summary": [
     {

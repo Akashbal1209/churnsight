@@ -2,7 +2,7 @@
 
 These rules are fast and transparent but brittle (they miss paraphrases and negations).
 They produce *noisy training labels*; the fine-tuned transformer then learns to generalise
-beyond the exact keywords. Both are evaluated on a separate hand-checked gold set.
+beyond the exact keywords. Both are evaluated on a separate, held-out gold set.
 
 Run:  python -m churnsight.nlp.weak_labels
 """

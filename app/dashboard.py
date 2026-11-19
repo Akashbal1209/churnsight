@@ -54,6 +54,8 @@ PLAIN_TOPIC = {
     "good_quality": "Good quality", "praise_recommend": "Happy, would recommend",
 }
 COMPLAINTS = ["wrong_missing_item", "defect_quality", "support_refund", "delivery_delay", "not_received"]
+RETURN_RATE = f"{eda.get('repurchase_rate_180d', 0) * 100:.1f} in 100"
+N_TEXT_REVIEWS = eda.get("n_text_reviews_clean", 0)
 
 T.brand()
 tabs = st.tabs(["Overview", "Customer groups", "Who comes back", "What customers say",
@@ -63,13 +65,13 @@ tabs = st.tabs(["Overview", "Customer groups", "Who comes back", "What customers
 with tabs[0]:
     one_time = eda.get("share_one_time_customers", 0.97)
     T.hero(f"{round(one_time * 100)} out of 100 customers buy only once.",
-           "We read 34,000 customer reviews and 96,000 orders from a Brazilian online marketplace "
+           f"We read {N_TEXT_REVIEWS / 1000:.0f},000 customer reviews and {eda.get('n_orders', 0) / 1000:.0f},000 orders from a Brazilian online marketplace "
            "to find out why, and who to help first.")
     c = st.columns(4)
     with c[0]:
         T.card("Customers", f"{eda.get('n_customers', 0):,}", "bought between 2016 and 2018")
     with c[1]:
-        T.card("Come back", f"{eda.get('repurchase_rate_180d', 0) * 100:.1f} in 100", "order again within 7 months", T.RED)
+        T.card("Come back", RETURN_RATE, "order again within 7 months", T.RED)
     with c[2]:
         T.card("Parcels late", f"{eda.get('late_delivery_rate', 0) * 100:.0f}%", "arrive after the promised date", T.AMBER)
     with c[3]:
@@ -102,9 +104,11 @@ with tabs[0]:
     with a[0]:
         T.action(1, f"Call {n_high:,} customers first", "The most upset ones: their order never came, nobody answered, or they spent a lot.")
     with a[1]:
-        T.action(2, f"Check {len(hot) if hot is not None else 0} sellers", "They get about twice as many complaints as an average seller.")
+        worst = float(hot["complaint_rate_vs_platform"].max()) if hot is not None else 0
+        T.action(2, f"Check {len(hot) if hot is not None else 0} sellers",
+                 f"Their customers complain more than average, up to {worst:.1f} times as often.")
     with a[2]:
-        T.action(3, "Plan for big sales", "On Black Friday 2017, 'my order never came' complaints tripled.")
+        T.action(3, "Plan for big sales", "On Black Friday 2017, 'my order never came' complaints nearly tripled.")
 
     with st.expander("Technical details"):
         coh = load_csv("cohort_retention.csv", index_col=0)
@@ -129,7 +133,7 @@ PLAIN_SEG = {
     "Loyal Repeat Buyers": "Loyal, buy again and again",
 }
 with tabs[1]:
-    T.hero("Our customers fall into 5 simple groups.",
+    T.hero(f"Our customers fall into {len(seg) if seg is not None else 5} simple groups.",
            "Grouped by when they bought, how much they spent, how often, and how their first order went.")
     if seg is not None:
         seg = seg.sort_values("size", ascending=False)
@@ -154,7 +158,7 @@ with tabs[1]:
 # =================================================================== Who comes back
 with tabs[2]:
     T.hero("Coming back is rare, and hard to predict.",
-           "Only about 1.5 in 100 customers order again. Our model still finds the likely ones faster than guessing.")
+           f"Only {RETURN_RATE} customers order again. Our model still finds the likely ones faster than guessing.")
     gains = load_json("gains.json")
     left, right = st.columns([1.4, 1])
     with left:
@@ -200,11 +204,15 @@ with tabs[2]:
 with tabs[3]:
     T.hero("We read every review automatically.",
            "A language model trained on Portuguese reviews sorts each one into topics, and warns us when a problem suddenly grows.")
+    nlp_cmp = load_csv("nlp_comparison.csv")
+    f1_model = float(nlp_cmp["topic_macro_f1"].iloc[-1]) if nlp_cmp is not None else 0
+    f1_rules = float(nlp_cmp["topic_macro_f1"].iloc[0]) if nlp_cmp is not None else 0
     c = st.columns(3)
     with c[0]:
-        T.card("Reviews read", "34,340", "in Portuguese, 2016–2018")
+        T.card("Reviews read", f"{N_TEXT_REVIEWS:,}", "in Portuguese, 2016–2018")
     with c[1]:
-        T.card("Reads them correctly", "83%", "vs 64% with simple keyword rules", T.TEAL)
+        T.card("Topic score", f"{f1_model * 100:.0f} / 100",
+               f"F1 on 250 held-out reviews; simple keyword rules: {f1_rules * 100:.0f}", T.TEAL)
     with c[2]:
         T.card("Problem warnings", f"{len(hist)}", "would have been sent, month by month", T.AMBER)
     st.write("")
@@ -244,9 +252,8 @@ with tabs[3]:
             st.caption("Reviews are in Portuguese. Key words: " + ", ".join(cl["keywords"][:6]))
 
     with st.expander("Technical details"):
-        nlp = load_csv("nlp_comparison.csv")
-        if nlp is not None:
-            st.dataframe(nlp.set_index("model"), width="stretch")
+        if nlp_cmp is not None:
+            st.dataframe(nlp_cmp.set_index("model"), width="stretch")
         st.dataframe(pd.DataFrame(hist), width="stretch", hide_index=True)
 
 # =================================================================== Sellers and cost
@@ -315,7 +322,7 @@ with tabs[5]:
         ev = load_csv("retrieval_eval.csv", index_col=0)
         if ev is not None:
             st.dataframe(ev, width="stretch")
-            st.caption("Hybrid search (BM25 + multilingual embeddings) on 16 queries with hand-labelled relevance.")
+            st.caption("Hybrid search (BM25 + multilingual embeddings) on 16 queries; relevance comes from the 250 gold reviews' topic labels.")
 
 # =================================================================== Who to help first
 with tabs[6]:
