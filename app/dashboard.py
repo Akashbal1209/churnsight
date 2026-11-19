@@ -80,8 +80,8 @@ with tabs[0]:
 
     left, right = st.columns(2)
     with left:
-        st.subheader("A late parcel almost halves the rating")
         on, late = eda.get("avg_review_score_on_time", 0), eda.get("avg_review_score_late", 0)
+        st.subheader(f"A late parcel drops the rating from {on:.1f} to {late:.1f} stars")
         fig = go.Figure(go.Bar(x=["Arrived on time", "Arrived late"], y=[on, late], marker_color=[T.TEAL, T.RED],
                                text=[f"{on:.1f} ★", f"{late:.1f} ★"], textposition="outside", width=0.5))
         st.plotly_chart(T.style(fig).update_yaxes(range=[0, 5.5], title="Average stars"), width="stretch")
@@ -94,7 +94,9 @@ with tabs[0]:
             s = pd.Series(agg).sort_values()
             fig = go.Figure(go.Bar(x=s.values, y=s.index, orientation="h", marker_color=T.PURPLE,
                                    text=[f"{v:,}" for v in s.values], textposition="outside"))
-            st.plotly_chart(T.style(fig).update_xaxes(title="Unhappy reviews"), width="stretch")
+            # Leave room on the right so the value labels are never cut off.
+            st.plotly_chart(T.style(fig).update_xaxes(title="Unhappy reviews", range=[0, s.max() * 1.2]),
+                            width="stretch")
 
     st.subheader("What we should do")
     a = st.columns(3)
@@ -259,7 +261,8 @@ with tabs[3]:
 # =================================================================== Sellers and cost
 with tabs[4]:
     T.hero("A few sellers cause a lot of the pain.",
-           "Some sellers get complaints on most of their orders. Complaints also make customers a little less likely to return.")
+           "For some sellers, most of their reviews are complaints. Customers who complained also came back "
+           "a little less often, though that gap is small.")
     if hot is not None:
         top = hot.head(10).copy()
         top["name"] = [f"Seller {chr(65 + i)} · {cat.replace('_', ' ')}" for i, cat in enumerate(top["main_category"].fillna("various").replace("unknown", "various"))]
@@ -269,7 +272,8 @@ with tabs[4]:
         fig.add_vline(x=avg * 100, line_dash="dash", line_color=T.MUTED, annotation_text="average seller",
                       annotation_position="bottom right", annotation_font_color=T.AMBER)
         st.subheader("Reviews with a complaint, by seller")
-        st.plotly_chart(T.style(fig, 400).update_yaxes(autorange="reversed").update_xaxes(title="% of reviews with a complaint"),
+        st.plotly_chart(T.style(fig, 400).update_yaxes(autorange="reversed")
+                        .update_xaxes(title="% of reviews with a complaint", range=[0, top["complaint_rate"].max() * 120]),
                         width="stretch")
     if impact is not None:
         st.subheader("Does a bad first experience stop people coming back?")
