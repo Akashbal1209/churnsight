@@ -2,6 +2,8 @@
 
 **Customer 360 intelligence: link what customers *say* (reviews) with what they *do* (orders) to explain churn and decide what to do next.**
 
+**Live demo:** https://churnsight-s5dv.onrender.com (free hosting: the first visit after a quiet spell takes ~1 minute to wake up. The demo runs the light version, where "Ask the reviews" searches with Portuguese keywords.)
+
 ![ChurnSight dashboard](artifacts/figures/dashboard_overview.jpg)
 
 The dashboard is written for non-technical readers: every page opens with one plain-language headline, and the model metrics sit behind "Technical details". Theme: animated aurora background with glass cards (pure CSS).
