@@ -42,7 +42,7 @@ def load_parquet(name: str):
 
 def fig_or_note(path: Path, caption: str):
     if path.exists():
-        st.image(str(path), caption=caption, use_container_width=True)
+        st.image(str(path), caption=caption, width="stretch")
     else:
         st.info(f"Run the pipeline to generate: {path.name}")
 
@@ -76,14 +76,14 @@ with tabs[0]:
                              y=[eda.get("avg_review_score_on_time", 0), eda.get("avg_review_score_late", 0)],
                              marker_color=["#4C9A6A", "#C44E52"], text=[eda.get("avg_review_score_on_time"), eda.get("avg_review_score_late")]))
             .update_layout(yaxis_title="Average review score", yaxis_range=[0, 5], height=320),
-            use_container_width=True,
+            width="stretch",
         )
     with right:
         st.subheader("Repurchase rate by first review score")
         by = eda.get("repurchase_rate_by_review_score", {})
         st.plotly_chart(
             px.bar(x=list(by.keys()), y=[v * 100 for v in by.values()], labels={"x": "Stars", "y": "% returning"})
-            .update_layout(height=320), use_container_width=True,
+            .update_layout(height=320), width="stretch",
         )
     st.subheader("Cohort retention")
     fig_or_note(ARTIFACTS / "figures" / "cohort_retention.png", "% of each first-purchase cohort ordering again, by month")
@@ -96,8 +96,8 @@ with tabs[1]:
     if prof is not None:
         st.subheader("Customer segments (RFM + experience, KMeans)")
         st.plotly_chart(px.bar(prof.sort_values("size"), x="size", y="segment", orientation="h", text="share")
-                        .update_layout(height=320), use_container_width=True)
-        st.dataframe(prof.drop(columns=["segment_id"], errors="ignore").set_index("segment").round(2), use_container_width=True)
+                        .update_layout(height=320), width="stretch")
+        st.dataframe(prof.drop(columns=["segment_id"], errors="ignore").set_index("segment").round(2), width="stretch")
         seg_m = load_json("segmentation_metrics.json")
         if seg_m:
             st.caption(f"Silhouette by k: { {k: round(v, 3) for k, v in seg_m['silhouette_by_k'].items()} }. "
@@ -109,7 +109,7 @@ with tabs[2]:
     cm = load_json("churn_metrics.json")
     if ab is not None:
         st.subheader("Does what customers SAY improve the retention model?")
-        st.dataframe(ab.set_index("variant"), use_container_width=True)
+        st.dataframe(ab.set_index("variant"), width="stretch")
         if cm:
             st.caption(f"Time-based split at {cm['time_split_cutoff']} (train {cm['n_train']:,} / test {cm['n_test']:,}). "
                        "Features use only information known 30 days after the first purchase.")
@@ -120,21 +120,21 @@ with tabs[2]:
             st.subheader("What drives returning (SHAP)")
             top = imp.head(12).iloc[::-1]
             st.plotly_chart(px.bar(top, x="mean_abs_shap", y=top.index, orientation="h").update_layout(height=420, yaxis_title=None),
-                            use_container_width=True)
+                            width="stretch")
     with right:
         st.subheader("Time to second purchase")
         fig_or_note(ARTIFACTS / "figures" / "km_by_experience.png", "Kaplan-Meier, by first experience")
     cox = load_csv("survival_cox.csv", index_col=0)
     if cox is not None:
         st.caption("Cox proportional hazards (hazard ratio < 1 = slower to return)")
-        st.dataframe(cox, use_container_width=True)
+        st.dataframe(cox, width="stretch")
 
 # ---------- Review intelligence ----------
 with tabs[3]:
     nlp = load_csv("nlp_comparison.csv")
     if nlp is not None:
         st.subheader("Topic classifier: keyword rules vs TF-IDF vs fine-tuned BERTimbau (hand-labelled gold set)")
-        st.dataframe(nlp.set_index("model"), use_container_width=True)
+        st.dataframe(nlp.set_index("model"), width="stretch")
     trends = load_csv("topic_trends.csv", index_col=0)
     if trends is not None:
         st.subheader("Share of reviews mentioning each topic, by month")
@@ -142,7 +142,7 @@ with tabs[3]:
                               format_func=lambda t: TOPICS[t])
         if pick:
             st.plotly_chart(px.line(trends[pick] * 100, labels={"value": "% of reviews", "order_month": "Month"})
-                            .update_layout(height=380), use_container_width=True)
+                            .update_layout(height=380), width="stretch")
     alerts = load_json("alerts.json")
     if alerts is not None:
         st.subheader("Rising-issue alerts (latest month, z-score ≥ 2)")
@@ -156,7 +156,7 @@ with tabs[3]:
     if hist:
         with st.expander(f"Backtest: alerts the monthly report would have raised ({len(hist)})", expanded=True):
             st.dataframe(pd.DataFrame(hist)[["month", "label", "share", "baseline_share", "z_score", "change_pct"]],
-                         use_container_width=True, hide_index=True)
+                         width="stretch", hide_index=True)
             st.caption("Validated against order data the NLP never saw: in Nov 2017 (Black Friday) orders jumped 63% "
                        "and the late-delivery rate went from 5% to 14%; in Feb-Mar 2018 it reached 16-21%. "
                        "The review-based alerts fire in exactly those months.")
@@ -190,12 +190,12 @@ with tabs[4]:
             marker_color=["#C44E52" if d < 0 else "#4C9A6A" for d in imp["diff_pp"]],
         ))
         fig.update_layout(xaxis_title="Repurchase rate vs other reviewers (percentage points, 95% CI)", height=420)
-        st.plotly_chart(fig, use_container_width=True)
-        st.dataframe(imp.set_index("label"), use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
+        st.dataframe(imp.set_index("label"), width="stretch")
     hot = load_csv("seller_hotspots.csv", index_col=0)
     if hot is not None:
         st.subheader("Seller hotspots (≥ 50 text reviews)")
-        st.dataframe(hot, use_container_width=True)
+        st.dataframe(hot, width="stretch")
 
 # ---------- Ask ChurnSight ----------
 with tabs[5]:
@@ -205,31 +205,38 @@ with tabs[5]:
     if not dense_available():
         st.warning("Lite mode: keyword (BM25) search only. Reviews are in Portuguese, so search with Portuguese "
                    "words (e.g. *faltando item*, *não recebi*, *quebrado*). The full hybrid search runs locally.")
-    q = st.text_input("Question", "Why do customers complain about missing items?")
-    cols = st.columns(3)
+    q = st.text_input("Question", "I ordered several items but only part of the order arrived")
+    cols = st.columns(4)
     stars = cols[0].slider("Review stars", 1, 5, (1, 3))
     months = cols[1].text_input("From month (YYYY-MM)", "2017-01")
-    rerank = cols[2].toggle("Cross-encoder rerank", value=False, help="Did not improve nDCG in our evaluation")
+    topic = cols[2].selectbox("Topic filter (classifier)", ["any", *TOPICS],
+                              format_func=lambda t: "Any topic" if t == "any" else TOPICS[t])
+    rerank = cols[3].toggle("Cross-encoder rerank", value=False, help="Did not improve nDCG in our evaluation")
     ev = load_csv("retrieval_eval.csv", index_col=0)
     if ev is not None:
         with st.expander("How good is retrieval? (16 queries, exact relevance from the hand-labelled gold set)"):
-            st.dataframe(ev, use_container_width=True)
+            st.dataframe(ev, width="stretch")
             st.caption("BM25 cannot match English questions to Portuguese reviews (nDCG 0.09); multilingual "
                        "embeddings can. Hybrid fusion is best overall; the cross-encoder did not help.")
     if st.button("Search", type="primary"):
         from churnsight.rag.answer import ask
 
+        from churnsight.nlp.weak_labels import topic_thresholds
+
+        filters = {"review_score": {"min": stars[0], "max": stars[1]}, "order_month": {"min": months}}
+        if topic != "any":  # metadata filter on the fine-tuned classifier's prediction
+            filters[f"topic_{topic}"] = {"min": topic_thresholds()[topic]}
         with st.spinner("Retrieving..."):
-            res = ask(q, filters={"review_score": {"min": stars[0], "max": stars[1]},
-                                  "order_month": {"min": months}}, rerank=rerank)
+            res = ask(q, filters=filters, rerank=rerank)
         if res.llm_used:
             st.markdown(res.answer)
             st.caption(f"Confidence: {res.confidence} · cited {len(res.cited_review_ids)} reviews"
                        + (f" · dropped invalid citations: {res.invalid_citations}" if res.invalid_citations else ""))
         else:
             st.info("LLM answer disabled (no API key configured). Showing the retrieved evidence.")
-        show = ["review_id", "review_score", "order_month", "category", "review_text", "score"]
-        st.dataframe(res.reviews[show], use_container_width=True, hide_index=True)
+        show = ["review_text", "review_score", "order_month", "category", "score", "review_id"]
+        st.dataframe(res.reviews[show], width="stretch", hide_index=True,
+                     column_config={"review_text": st.column_config.TextColumn("Review (pt-BR)", width="large")})
 
 # ---------- Action Center ----------
 with tabs[6]:
@@ -241,7 +248,7 @@ with tabs[6]:
         lvl = st.radio("Priority", ["high", "medium"], horizontal=True)
         sub = queue[queue["priority"] == lvl].head(200)
         st.dataframe(sub[["review_id", "review_score", "payment_value", "topics_label", "priority_reasons", "review_text"]],
-                     use_container_width=True, hide_index=True)
+                     width="stretch", hide_index=True)
         rid = st.selectbox("Open case", sub["review_id"])
         row = sub.set_index("review_id").loc[rid]
         st.markdown(f"> {row['review_text']}")

@@ -4,7 +4,42 @@
 
 Built on the public [Olist Brazilian E-commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (~100k orders, 2016–2018, reviews in Portuguese).
 
-<!-- RESULTS -->
+## Results at a glance
+
+| Area | Result |
+|---|---|
+| Data | 96,470 delivered orders · 93,350 customers · 34,340 clean text reviews (Portuguese) |
+| Retention reality | **97% of customers buy once**; only **1.55%** return between day 30 and day 210 |
+| Review topic classifier (gold set, 250 reviews) | Topic macro-F1 **0.835** (fine-tuned BERTimbau, two-stage) vs **0.636** keyword rules and **0.666** TF-IDF |
+| Retrieval (16 EN + PT queries, exact relevance) | Hybrid nDCG@10 **0.79**; BM25 alone fails on English questions (**0.09**) |
+| Complaint discovery | **28 recurring complaint clusters** from 8,860 1-2★ reviews (2% unassigned) |
+| Rising-issue alerts (backtest) | Flags **Nov 2017** ("order not received" +194%, z = 14.5) and **Feb-Mar 2018**, the exact months the late-delivery rate jumped from 5% to 14-21% in order data the NLP never saw |
+| Retention model | ROC-AUC **0.564**, **1.7× lift** in the top 10% (time-based split) |
+| Survival | A 1-2★ first review means a **14% lower return hazard** (Cox HR 0.86, p = 0.016) |
+
+### Review classifier: what moved the needle
+
+| Model (all trained without gold labels) | Topic macro-F1 | Macro-F1 incl. negativity |
+|---|---|---|
+| Keyword rules (the weak labeller) | 0.636 | 0.565 |
+| TF-IDF + LogReg, weak labels | 0.654 | 0.660 |
+| TF-IDF + LogReg, weak + silver | 0.666 | 0.671 |
+| BERTimbau stage 1 (weak labels) | 0.654 | 0.668 |
+| **BERTimbau stage 1 → stage 2 on 480 silver reviews** | **0.846** | **0.839** |
+| + per-label thresholds tuned on 120 held-out silver reviews (final) | 0.835 | 0.830 |
+
+Training on 30k keyword labels alone teaches a model to imitate the keywords (0.654 ≈ rules). A short second fine-tuning stage on 480 carefully labelled reviews lifts topic F1 by ~19 points. The thresholds were chosen on held-out silver data before looking at gold; they happened to cost 1 point on gold, and we report that rather than switching.
+
+*Caveat:* silver and gold labels were written by the same annotator (an LLM following the same written guideline), so part of the stage-2 gain may be learning that annotator's conventions. An independent human check of the gold set is the next step.
+
+### What did **not** work (and what that tells the business)
+
+- **Review text does not improve the repurchase model.** Order-only features: AUC 0.564; adding the review score: 0.564; adding topic and sentiment probabilities: 0.546. With ~600 returning customers in training and 97% one-time buyers, *who comes back* is driven mostly by product category and season (top SHAP features), not by what the first review said.
+- **No single complaint topic has a significant repurchase effect.** Defects (relative risk 0.68) and wrong/missing items (0.78) show the biggest drops, but every 95% CI includes zero. The revenue at stake per topic is small (~R$2.5k) because the base return rate is tiny.
+- **So the value of review intelligence here is operational, not predictive:** catching delivery crises early (the backtest alerts), finding seller hotspots (sellers with up to 2.6× the platform complaint rate), and prioritising the ~3,800 high-priority unhappy customers for outreach.
+- **Cross-encoder reranking did not help** (nDCG 0.781 vs 0.792 without it), so it is off by default.
+
+![Cohort retention](artifacts/figures/cohort_retention.png)
 
 ## Why this project
 
@@ -84,6 +119,10 @@ uvicorn app.api:app --reload               # http://localhost:8000/docs
 
 # 5. Tests
 pytest -q
+
+# 6. Refresh the slim bundle the deployed app reads, then smoke-test deploy (lite) mode
+python scripts/export_app_data.py
+python tests/smoke_dashboard_lite.py
 ```
 
 The deployed dashboard runs in **lite mode** (`CHURNSIGHT_LITE=1`): it reads the slim bundle in `data/app/` and uses BM25 search instead of the neural encoder, so it fits a 512 MB container. See `Dockerfile` and `render.yaml`.
