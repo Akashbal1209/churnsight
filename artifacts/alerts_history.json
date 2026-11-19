@@ -1,0 +1,101 @@
+[
+  {
+    "topic": "support_refund",
+    "label": "Seller support, refund, return or cancellation",
+    "month": "2017-08",
+    "share": 0.0809,
+    "baseline_share": 0.0609,
+    "z_score": 2.86,
+    "change_pct": 32.9
+  },
+  {
+    "topic": "wrong_missing_item",
+    "label": "Wrong, different or missing item",
+    "month": "2017-09",
+    "share": 0.1431,
+    "baseline_share": 0.116,
+    "z_score": 3.9,
+    "change_pct": 23.3
+  },
+  {
+    "topic": "wrong_missing_item",
+    "label": "Wrong, different or missing item",
+    "month": "2017-10",
+    "share": 0.1525,
+    "baseline_share": 0.1226,
+    "z_score": 2.83,
+    "change_pct": 24.4
+  },
+  {
+    "topic": "not_received",
+    "label": "Order not received",
+    "month": "2017-11",
+    "share": 0.1271,
+    "baseline_share": 0.0432,
+    "z_score": 14.55,
+    "change_pct": 194.4
+  },
+  {
+    "topic": "delivery_delay",
+    "label": "Delivery delayed / slow",
+    "month": "2017-11",
+    "share": 0.1136,
+    "baseline_share": 0.0535,
+    "z_score": 7.52,
+    "change_pct": 112.2
+  },
+  {
+    "topic": "support_refund",
+    "label": "Seller support, refund, return or cancellation",
+    "month": "2017-11",
+    "share": 0.0903,
+    "baseline_share": 0.0655,
+    "z_score": 2.33,
+    "change_pct": 37.9
+  },
+  {
+    "topic": "delivery_delay",
+    "label": "Delivery delayed / slow",
+    "month": "2018-02",
+    "share": 0.1436,
+    "baseline_share": 0.076,
+    "z_score": 2.2,
+    "change_pct": 89.0
+  },
+  {
+    "topic": "not_received",
+    "label": "Order not received",
+    "month": "2018-02",
+    "share": 0.1339,
+    "baseline_share": 0.0689,
+    "z_score": 2.01,
+    "change_pct": 94.4
+  },
+  {
+    "topic": "not_received",
+    "label": "Order not received",
+    "month": "2018-03",
+    "share": 0.1659,
+    "baseline_share": 0.0849,
+    "z_score": 2.17,
+    "change_pct": 95.5
+  },
+  {
+    "topic": "delivery_delay",
+    "label": "Delivery delayed / slow",
+    "month": "2018-03",
+    "share": 0.1667,
+    "baseline_share": 0.0926,
+    "z_score": 2.03,
+    "change_pct": 80.1
+  },
+  {
+    "topic": "defect_quality",
+    "label": "Defective / poor quality / damaged",
+    "month": "2018-07",
+    "share": 0.1004,
+    "baseline_share": 0.0923,
+    "z_score": 2.34,
+    "change_pct": 8.8
+  }
+]

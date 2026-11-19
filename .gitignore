@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# Data (large / licensed) - only small curated outputs are committed
+data/raw/
+data/interim/
+data/processed/*.parquet
+data/processed/*.npy
+data/processed/qdrant/
+!data/processed/.gitkeep
+
+# Models and experiment artifacts
+models/
+mlruns/
+*.pt
+*.bin
+*.safetensors
+
+# Local tool config (machine-specific paths)
+
+# OS / editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/

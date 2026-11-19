@@ -1,0 +1,65 @@
+config,topic,lang,p@5,p@10,mrr,ndcg@10
+BM25 only,delivery_delay,en,,,0.0,0.0
+BM25 only,delivery_delay,pt,1.0,0.6,1.0,0.7151857987862356
+BM25 only,not_received,en,,,0.0,0.0
+BM25 only,not_received,pt,1.0,1.0,1.0,1.0
+BM25 only,fast_delivery,en,,,0.0,0.0
+BM25 only,fast_delivery,pt,1.0,0.9,1.0,0.933745776545611
+BM25 only,defect_quality,en,,,0.0,0.0
+BM25 only,defect_quality,pt,1.0,0.7,1.0,0.7819835854675755
+BM25 only,wrong_missing_item,en,1.0,1.0,1.0,0.3589542101716347
+BM25 only,wrong_missing_item,pt,0.8,0.6,1.0,0.7065836017263629
+BM25 only,good_quality,en,0.2,0.3,1.0,0.37185395737611554
+BM25 only,good_quality,pt,1.0,0.7,1.0,0.7846170207230129
+BM25 only,support_refund,en,,,0.0,0.0
+BM25 only,support_refund,pt,1.0,0.6,1.0,0.727329844310522
+BM25 only,praise_recommend,en,,,0.0,0.0
+BM25 only,praise_recommend,pt,0.8,0.9,1.0,0.8899541168509599
+Dense only,delivery_delay,en,0.6,0.6,1.0,0.6722390270733757
+Dense only,delivery_delay,pt,1.0,1.0,1.0,1.0
+Dense only,not_received,en,0.6,0.6,1.0,0.6293644814585829
+Dense only,not_received,pt,1.0,0.8,1.0,0.8701249883466593
+Dense only,fast_delivery,en,0.8,0.9,1.0,0.8899541168509599
+Dense only,fast_delivery,pt,1.0,1.0,1.0,1.0
+Dense only,defect_quality,en,1.0,0.7,1.0,0.7909506325094737
+Dense only,defect_quality,pt,1.0,0.8,1.0,0.8701249883466593
+Dense only,wrong_missing_item,en,0.4,0.5,1.0,0.5206178632166882
+Dense only,wrong_missing_item,pt,0.4,0.2,0.5,0.2489083270225946
+Dense only,good_quality,en,0.8,0.9,1.0,0.9052116356304493
+Dense only,good_quality,pt,0.8,0.8,1.0,0.7948833326720564
+Dense only,support_refund,en,0.6,0.6,1.0,0.6403089930936581
+Dense only,support_refund,pt,0.8,0.5,1.0,0.5795003533950692
+Dense only,praise_recommend,en,1.0,0.9,1.0,0.9216017310213247
+Dense only,praise_recommend,pt,1.0,1.0,1.0,1.0
+Hybrid (RRF),delivery_delay,en,0.6,0.6,1.0,0.6722390270733757
+Hybrid (RRF),delivery_delay,pt,1.0,1.0,1.0,1.0
+Hybrid (RRF),not_received,en,0.6,0.6,1.0,0.6293644814585829
+Hybrid (RRF),not_received,pt,1.0,0.9,1.0,0.933745776545611
+Hybrid (RRF),fast_delivery,en,0.8,0.9,1.0,0.8899541168509599
+Hybrid (RRF),fast_delivery,pt,1.0,0.9,1.0,0.9363792118010483
+Hybrid (RRF),defect_quality,en,1.0,0.7,1.0,0.7909506325094737
+Hybrid (RRF),defect_quality,pt,1.0,0.8,1.0,0.8630152897016883
+Hybrid (RRF),wrong_missing_item,en,0.6,0.5,1.0,0.6117952373568122
+Hybrid (RRF),wrong_missing_item,pt,0.6,0.3,1.0,0.424926013816671
+Hybrid (RRF),good_quality,en,1.0,0.6,1.0,0.7222954974312066
+Hybrid (RRF),good_quality,pt,1.0,0.8,1.0,0.8630152897016883
+Hybrid (RRF),support_refund,en,0.6,0.6,1.0,0.6403089930936581
+Hybrid (RRF),support_refund,pt,0.8,0.7,1.0,0.7778721720600673
+Hybrid (RRF),praise_recommend,en,1.0,0.9,1.0,0.9216017310213247
+Hybrid (RRF),praise_recommend,pt,1.0,1.0,1.0,1.0
+Hybrid + cross-encoder rerank,delivery_delay,en,0.6,0.6,0.5,0.5372903784169164
+Hybrid + cross-encoder rerank,delivery_delay,pt,0.8,0.7,1.0,0.7849818707050383
+Hybrid + cross-encoder rerank,not_received,en,0.8,0.5,1.0,0.6371523797895856
+Hybrid + cross-encoder rerank,not_received,pt,1.0,0.9,1.0,0.9216017310213247
+Hybrid + cross-encoder rerank,fast_delivery,en,1.0,1.0,1.0,1.0
+Hybrid + cross-encoder rerank,fast_delivery,pt,1.0,1.0,1.0,1.0
+Hybrid + cross-encoder rerank,defect_quality,en,0.8,0.7,0.5,0.6352557412688555
+Hybrid + cross-encoder rerank,defect_quality,pt,0.8,0.7,1.0,0.725452110735279
+Hybrid + cross-encoder rerank,wrong_missing_item,en,0.2,0.5,0.5,0.42367664508731884
+Hybrid + cross-encoder rerank,wrong_missing_item,pt,0.4,0.4,0.5,0.39170347105873193
+Hybrid + cross-encoder rerank,good_quality,en,1.0,0.9,1.0,0.9363792118010483
+Hybrid + cross-encoder rerank,good_quality,pt,1.0,0.8,1.0,0.8643145546088337
+Hybrid + cross-encoder rerank,support_refund,en,0.8,0.8,1.0,0.8389574121760602
+Hybrid + cross-encoder rerank,support_refund,pt,1.0,0.9,1.0,0.933745776545611
+Hybrid + cross-encoder rerank,praise_recommend,en,1.0,0.9,1.0,0.9363792118010483
+Hybrid + cross-encoder rerank,praise_recommend,pt,1.0,0.9,1.0,0.9216017310213247

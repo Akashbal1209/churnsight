@@ -1,0 +1,14 @@
+# Runtime dependencies for the dashboard + API (kept light for deployment)
+numpy>=1.26
+pandas>=2.2
+pyarrow>=16
+scikit-learn>=1.5
+plotly>=5.22
+streamlit>=1.38
+fastapi>=0.115
+uvicorn>=0.30
+pydantic>=2.7
+python-dotenv>=1.0
+rank-bm25>=0.2.2
+unidecode>=1.3
+anthropic>=0.70

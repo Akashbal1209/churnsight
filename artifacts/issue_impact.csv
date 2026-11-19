@@ -1,0 +1,9 @@
+topic,label,customers_observed,repurchase_rate,repurchase_rate_others,diff_pp,ci95_low_pp,ci95_high_pp,significant,relative_risk,customers_with_topic_all,revenue_at_stake_brl
+defect_quality,Defective / poor quality / damaged,1614,0.0105,0.0155,-0.5,-1.03,0.07,False,0.679,3121,2466.0
+wrong_missing_item,"Wrong, different or missing item",2231,0.0121,0.0155,-0.34,-0.79,0.2,False,0.782,4452,2387.0
+not_received,Order not received,838,0.0131,0.0151,-0.2,-0.96,0.66,False,0.868,1912,605.0
+support_refund,"Seller support, refund, return or cancellation",1111,0.0135,0.0151,-0.16,-0.79,0.62,False,0.893,2230,576.0
+fast_delivery,Fast / on-time delivery,5841,0.0149,0.0151,-0.02,-0.41,0.38,False,0.987,11110,333.0
+delivery_delay,Delivery delayed / slow,1047,0.0172,0.0149,0.23,-0.52,1.11,False,1.156,2149,-794.0
+praise_recommend,Praise / would recommend,8243,0.0165,0.0135,0.3,-0.07,0.69,False,1.222,17090,-8136.0
+good_quality,Good quality / as described,2645,0.0197,0.0141,0.55,-0.02,1.14,False,1.393,5176,-4557.0

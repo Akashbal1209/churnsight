@@ -1,0 +1,47 @@
+{
+  "final_variant": "C. + review NLP (topics, sentiment)",
+  "time_split_cutoff": "2017-11-30",
+  "n_train": 36602,
+  "n_test": 12201,
+  "ablation": [
+    {
+      "variant": "A. order + delivery only",
+      "n_features": 16,
+      "roc_auc": 0.5638,
+      "pr_auc": 0.019,
+      "base_rate": 0.0142,
+      "lift_top10pct": 1.734,
+      "n_trees": 106
+    },
+    {
+      "variant": "B. + review score",
+      "n_features": 18,
+      "roc_auc": 0.564,
+      "pr_auc": 0.0193,
+      "base_rate": 0.0142,
+      "lift_top10pct": 1.561,
+      "n_trees": 50
+    },
+    {
+      "variant": "C. + review NLP (topics, sentiment)",
+      "n_features": 27,
+      "roc_auc": 0.5457,
+      "pr_auc": 0.0184,
+      "base_rate": 0.0142,
+      "lift_top10pct": 1.503,
+      "n_trees": 113
+    }
+  ],
+  "top_shap_features": {
+    "category": 0.15834,
+    "purchase_month": 0.07151,
+    "freight": 0.04269,
+    "payment_value": 0.03936,
+    "customer_state": 0.039,
+    "delivery_days": 0.03571,
+    "freight_ratio": 0.03434,
+    "review_score": 0.02958,
+    "installments": 0.02745,
+    "promised_days": 0.02122
+  }
+}

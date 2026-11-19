@@ -1,0 +1,11 @@
+{
+  "delivery_delay": 0.35,
+  "not_received": 0.5,
+  "fast_delivery": 0.5,
+  "defect_quality": 0.4,
+  "wrong_missing_item": 0.7,
+  "good_quality": 0.7,
+  "support_refund": 0.6,
+  "praise_recommend": 0.2,
+  "negative": 0.4
+}

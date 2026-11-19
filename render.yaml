@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: churnsight
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: LLM_PROVIDER
+        value: none          # set to "anthropic" and add ANTHROPIC_API_KEY as a secret to enable live answers
+      - key: ANTHROPIC_API_KEY
+        sync: false

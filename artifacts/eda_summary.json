@@ -1,0 +1,21 @@
+{
+  "n_orders": 96470,
+  "n_customers": 93350,
+  "share_one_time_customers": 0.97,
+  "repurchase_rate_180d": 0.0155,
+  "late_delivery_rate": 0.0811,
+  "avg_review_score": 4.156,
+  "share_reviews_with_text": 0.4198,
+  "n_text_reviews_clean": 34340,
+  "repurchase_rate_on_time": 0.0156,
+  "repurchase_rate_late": 0.0139,
+  "avg_review_score_on_time": 4.294,
+  "avg_review_score_late": 2.565,
+  "repurchase_rate_by_review_score": {
+    "1": 0.0139,
+    "2": 0.0114,
+    "3": 0.0147,
+    "4": 0.0144,
+    "5": 0.0166
+  }
+}

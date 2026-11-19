@@ -1,0 +1,130 @@
+{
+  "base_model": "neuralmind/bert-base-portuguese-cased",
+  "n_stage1_train": 30141,
+  "n_stage1_val": 3349,
+  "n_silver_train": 480,
+  "n_silver_holdout": 120,
+  "n_gold": 250,
+  "stage2_epochs": 4,
+  "thresholds": {
+    "delivery_delay": 0.35,
+    "not_received": 0.5,
+    "fast_delivery": 0.5,
+    "defect_quality": 0.4,
+    "wrong_missing_item": 0.7,
+    "good_quality": 0.7,
+    "support_refund": 0.6,
+    "praise_recommend": 0.2,
+    "negative": 0.4
+  },
+  "results": {
+    "1. Keyword rules": {
+      "macro_f1": 0.5649,
+      "topic_macro_f1": 0.6355,
+      "micro_f1": 0.5673,
+      "macro_precision": 0.7471,
+      "macro_recall": 0.4805,
+      "per_label_f1": {
+        "delivery_delay": 0.63,
+        "not_received": 0.654,
+        "fast_delivery": 0.842,
+        "defect_quality": 0.484,
+        "wrong_missing_item": 0.423,
+        "good_quality": 0.5,
+        "support_refund": 0.759,
+        "praise_recommend": 0.793,
+        "negative": 0.0
+      }
+    },
+    "2a. TF-IDF + LogReg (weak)": {
+      "macro_f1": 0.66,
+      "topic_macro_f1": 0.6538,
+      "micro_f1": 0.6895,
+      "macro_precision": 0.8321,
+      "macro_recall": 0.5843,
+      "per_label_f1": {
+        "delivery_delay": 0.615,
+        "not_received": 0.655,
+        "fast_delivery": 0.847,
+        "defect_quality": 0.484,
+        "wrong_missing_item": 0.553,
+        "good_quality": 0.523,
+        "support_refund": 0.75,
+        "praise_recommend": 0.803,
+        "negative": 0.71
+      }
+    },
+    "2b. TF-IDF + LogReg (weak + silver)": {
+      "macro_f1": 0.6713,
+      "topic_macro_f1": 0.6657,
+      "micro_f1": 0.6974,
+      "macro_precision": 0.832,
+      "macro_recall": 0.5993,
+      "per_label_f1": {
+        "delivery_delay": 0.679,
+        "not_received": 0.655,
+        "fast_delivery": 0.847,
+        "defect_quality": 0.459,
+        "wrong_missing_item": 0.553,
+        "good_quality": 0.523,
+        "support_refund": 0.807,
+        "praise_recommend": 0.803,
+        "negative": 0.716
+      }
+    },
+    "3a. BERTimbau stage 1 (weak)": {
+      "macro_f1": 0.6684,
+      "topic_macro_f1": 0.6539,
+      "micro_f1": 0.7057,
+      "macro_precision": 0.8376,
+      "macro_recall": 0.5863,
+      "per_label_f1": {
+        "delivery_delay": 0.679,
+        "not_received": 0.654,
+        "fast_delivery": 0.842,
+        "defect_quality": 0.508,
+        "wrong_missing_item": 0.486,
+        "good_quality": 0.5,
+        "support_refund": 0.759,
+        "praise_recommend": 0.803,
+        "negative": 0.784
+      }
+    },
+    "3b. BERTimbau stage 1+2 (weak -> silver)": {
+      "macro_f1": 0.8386,
+      "topic_macro_f1": 0.8461,
+      "micro_f1": 0.8383,
+      "macro_precision": 0.8643,
+      "macro_recall": 0.8168,
+      "per_label_f1": {
+        "delivery_delay": 0.818,
+        "not_received": 0.826,
+        "fast_delivery": 0.944,
+        "defect_quality": 0.775,
+        "wrong_missing_item": 0.846,
+        "good_quality": 0.776,
+        "support_refund": 0.889,
+        "praise_recommend": 0.894,
+        "negative": 0.779
+      }
+    },
+    "3c. + thresholds tuned on silver holdout": {
+      "macro_f1": 0.8295,
+      "topic_macro_f1": 0.8352,
+      "micro_f1": 0.8294,
+      "macro_precision": 0.8523,
+      "macro_recall": 0.8163,
+      "per_label_f1": {
+        "delivery_delay": 0.812,
+        "not_received": 0.826,
+        "fast_delivery": 0.944,
+        "defect_quality": 0.795,
+        "wrong_missing_item": 0.816,
+        "good_quality": 0.718,
+        "support_refund": 0.903,
+        "praise_recommend": 0.867,
+        "negative": 0.784
+      }
+    }
+  }
+}

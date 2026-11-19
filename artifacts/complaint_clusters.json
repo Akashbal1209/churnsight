@@ -1,0 +1,821 @@
+{
+  "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "n_complaints": 8860,
+  "n_clusters": 28,
+  "outlier_share_before_reassignment": 0.448,
+  "outlier_share": 0.02,
+  "clusters": [
+    {
+      "cluster": 0,
+      "size": 337,
+      "keywords": [
+        "recebi",
+        "dia",
+        "agora",
+        "entregue",
+        "chegou",
+        "03",
+        "entrega",
+        "retorno",
+        "veio",
+        "2018"
+      ],
+      "representative_reviews": [
+        "RECEBI APENAS A METADE DOS PRODUTOS, ESTOUNO AGUARDO DO RETORNO ATÉ AGORA! JÁ TENTEI CONTATO ATÉ O MOMENTO SEM SUCESSO, NINGUÉM ATENDE NOS TELEFONES REFERIDOS!! FALTA DE RESPEITO!! ABUSO",
+        "AINDA NÃO ENTREGOU TODO O PEDIDO, ALÉM DE TER MANDADO A NOTA FISCAL COM O TOTAL DOS ITENS, MANDOU NO FISICO EMBALAGENS SEPARADAS PARA 05UN. 03 CHEGARAM NUM DIA, 01 EM OUTRO E ESTÁ FALTANDO 01UN",
+        "- O PRAZO MÁXIMO ERA DIA 19/03/2018 E HOJE DIA 21/03/2018 ATÉ O PRESENTE MOMENTO NÃO RECEBI A MERCADORIA. - SE ALGUÉM ME PERGUNTAR SOBRE A COMPRA EFETUADA , FALAREI QUE NÃO RECEBI!"
+      ],
+      "avg_review_score": 1.19,
+      "late_share": 0.309,
+      "top_categories": {
+        "bed_bath_table": 43,
+        "sports_leisure": 35,
+        "computers_accessories": 24
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 1,
+      "size": 609,
+      "keywords": [
+        "dois",
+        "apenas",
+        "duas",
+        "recebi apenas",
+        "recebi",
+        "somente",
+        "entregue",
+        "outro",
+        "veio",
+        "so"
+      ],
+      "representative_reviews": [
+        "Comprei dois cobertores e recebi apenas um",
+        "comprei dois produtos, mas recebi apenas um",
+        "Comprei dois e recebi apenas um"
+      ],
+      "avg_review_score": 1.21,
+      "late_share": 0.062,
+      "top_categories": {
+        "bed_bath_table": 108,
+        "furniture_decor": 75,
+        "sports_leisure": 51
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 2,
+      "size": 464,
+      "keywords": [
+        "dia",
+        "prazo",
+        "entrega",
+        "04",
+        "prazo entrega",
+        "03",
+        "data",
+        "entrega dia",
+        "12",
+        "hoje"
+      ],
+      "representative_reviews": [
+        "a loja até despachou o produto, mas ele não chegou. O prazo de entrega era até o dia 27/04 e já estamos no dia 03/05 e nada. era um produtos para presente e a loja não tinha disponível remessa expres",
+        "Comprei o produto em 20/02/2017; o prazo para entrega era até 17/03: hoje é 21/03 e ainda não recebi",
+        "O produto estava previsto para ser entregue até dia 27/03 e até hoje dia 03/04 não recebi"
+      ],
+      "avg_review_score": 1.18,
+      "late_share": 0.789,
+      "top_categories": {
+        "health_beauty": 43,
+        "computers_accessories": 41,
+        "sports_leisure": 40
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 3,
+      "size": 376,
+      "keywords": [
+        "prazo",
+        "entrega",
+        "demora",
+        "dias",
+        "atraso",
+        "prazo entrega",
+        "demorou",
+        "aguardando",
+        "chegar",
+        "nada"
+      ],
+      "representative_reviews": [
+        "O prazo da entrega nao foi comprido",
+        "Ñ compriu seu prazo de entrega",
+        "Não respeitou o prazo da entrega"
+      ],
+      "avg_review_score": 1.28,
+      "late_share": 0.617,
+      "top_categories": {
+        "bed_bath_table": 47,
+        "health_beauty": 29,
+        "computers_accessories": 28
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 4,
+      "size": 442,
+      "keywords": [
+        "foto",
+        "diferente",
+        "original",
+        "propaganda",
+        "embalagem",
+        "enganosa",
+        "anúncio",
+        "propaganda enganosa",
+        "veio",
+        "site"
+      ],
+      "representative_reviews": [
+        "veio produto diferente da foto , modelo diferente",
+        "Foto enganosa. Foto muito diferente principalmente a graninha sintética muito rala...diferente da foto",
+        "PRODUTO DIFERENTE DA FOTO. Produto não é o mesmo da foto, muito diferente, odiei"
+      ],
+      "avg_review_score": 1.26,
+      "late_share": 0.048,
+      "top_categories": {
+        "computers_accessories": 51,
+        "bed_bath_table": 51,
+        "perfumery": 29
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 5,
+      "size": 302,
+      "keywords": [
+        "entrega",
+        "bom",
+        "ruim",
+        "demorou",
+        "demora",
+        "boa",
+        "recomendo",
+        "gostei",
+        "demorando",
+        "relogio"
+      ],
+      "representative_reviews": [
+        "Bom. Demora a chegar",
+        "Muito bom eu gostei",
+        "Bom. O produto é bom,só a entrega que demorou"
+      ],
+      "avg_review_score": 1.4,
+      "late_share": 0.248,
+      "top_categories": {
+        "bed_bath_table": 35,
+        "watches_gifts": 26,
+        "sports_leisure": 23
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 6,
+      "size": 451,
+      "keywords": [
+        "lannister",
+        "lojas",
+        "nunca",
+        "sempre",
+        "recomendo",
+        "lojas lannister",
+        "vez",
+        "site",
+        "contato",
+        "compro"
+      ],
+      "representative_reviews": [
+        "Pessimo. Nunca mais vou comprar pelas lojas lannister",
+        "falta de contato de tel. não consigo nunca falar com as lojas lannister",
+        "Sempre comprei nas lojas lannister e nunca tive problemas com a entrega, porém dessa vez estou insatisfeito com o prazo dessa entrega"
+      ],
+      "avg_review_score": 1.14,
+      "late_share": 0.503,
+      "top_categories": {
+        "bed_bath_table": 59,
+        "health_beauty": 51,
+        "furniture_decor": 36
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 7,
+      "size": 472,
+      "keywords": [
+        "correios",
+        "correio",
+        "tive",
+        "casa",
+        "retirar",
+        "frete",
+        "email",
+        "entregue",
+        "mail",
+        "entrega"
+      ],
+      "representative_reviews": [
+        "0. Não foi entregue na minha casa tive que arca com a passagem de ônibus para panha no correio e não fui reembolsado",
+        "cobra frete e não entrega. odiei a compra pois paguei frete e tive que retirar nos correios , tudo que comprei na lannister foi entregue na minha casa ..não compro mais",
+        "Paguei o frete e não recebi o produto em casa tive que retirar no correio e ainda pagar para ser transportado até a minha casa. Ainda mandaram o produto para uma agência do correio em área de risco"
+      ],
+      "avg_review_score": 1.2,
+      "late_share": 0.35,
+      "top_categories": {
+        "health_beauty": 47,
+        "furniture_decor": 44,
+        "bed_bath_table": 36
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 8,
+      "size": 511,
+      "keywords": [
+        "recebi",
+        "chegou",
+        "aguardando",
+        "avaliar",
+        "entregue",
+        "recebi recebi",
+        "momento",
+        "posso",
+        "agora",
+        "saber"
+      ],
+      "representative_reviews": [
+        "Ainda não recebi o que comprei",
+        "Eu não recebi o produto ainda",
+        "Não recebi. Não recebi ainda o produto"
+      ],
+      "avg_review_score": 1.13,
+      "late_share": 0.663,
+      "top_categories": {
+        "bed_bath_table": 63,
+        "health_beauty": 58,
+        "sports_leisure": 51
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 9,
+      "size": 316,
+      "keywords": [
+        "celular",
+        "película",
+        "cabo",
+        "capa",
+        "aparelho",
+        "carregador",
+        "bateria",
+        "veio",
+        "funciona",
+        "tela"
+      ],
+      "representative_reviews": [
+        "Película menor do que a tela do celular",
+        "Película muito ruim celular Mem funcionou a tela com ela",
+        "Os orifícios da capa para conexão do cabo P2 (3,5 mm) e do microfone não correspondem ao celular"
+      ],
+      "avg_review_score": 1.25,
+      "late_share": 0.063,
+      "top_categories": {
+        "telephony": 98,
+        "computers_accessories": 58,
+        "electronics": 32
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 10,
+      "size": 339,
+      "keywords": [
+        "qualidade",
+        "péssima qualidade",
+        "péssima",
+        "funciona",
+        "ruim",
+        "defeito",
+        "baixa",
+        "baixa qualidade",
+        "fraco",
+        "recomendo"
+      ],
+      "representative_reviews": [
+        "Péssima qualidade do produto",
+        "Produto de péssima qualidade",
+        "Produto de Péssima qualidade!"
+      ],
+      "avg_review_score": 1.29,
+      "late_share": 0.068,
+      "top_categories": {
+        "bed_bath_table": 52,
+        "computers_accessories": 41,
+        "health_beauty": 23
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 11,
+      "size": 224,
+      "keywords": [
+        "cor",
+        "veio cor",
+        "azul",
+        "cor errada",
+        "preta",
+        "cores",
+        "errada",
+        "veio",
+        "rosa",
+        "preto"
+      ],
+      "representative_reviews": [
+        "cor errada. veio na cor errado, pedi uma cor e veio outro",
+        "Pedi o produto na cor lilás mas foi entregue na cor preta",
+        "Cor errada. Comprei o produto com a cor laranja e veio com a cor amarela"
+      ],
+      "avg_review_score": 1.31,
+      "late_share": 0.054,
+      "top_categories": {
+        "bed_bath_table": 63,
+        "computers_accessories": 28,
+        "furniture_decor": 24
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 12,
+      "size": 357,
+      "keywords": [
+        "dinheiro",
+        "quero",
+        "volta",
+        "dinheiro volta",
+        "devolver",
+        "quero dinheiro",
+        "retorno",
+        "troca",
+        "devolução",
+        "recebi"
+      ],
+      "representative_reviews": [
+        "Eu quero o meu produto ou meu dinheiro de volta!!!",
+        "Quero meu dinheiro de volta",
+        "Eu quero meu dinheiro de volta"
+      ],
+      "avg_review_score": 1.11,
+      "late_share": 0.269,
+      "top_categories": {
+        "computers_accessories": 35,
+        "furniture_decor": 28,
+        "sports_leisure": 26
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 13,
+      "size": 216,
+      "keywords": [
+        "cancelamento",
+        "cancelar",
+        "cancelei",
+        "pedido",
+        "cancelado",
+        "solicitei",
+        "assim",
+        "fiz",
+        "devolução",
+        "quero"
+      ],
+      "representative_reviews": [
+        "Pedi o cancelamento e mesmo assim me entregaram o produto",
+        "Comprei uma coisa e recebi uma falsificação. Cancelei o pedido e msm assim foi entregue como se não ouvesse o cancelamento",
+        "Quero o cancelamento"
+      ],
+      "avg_review_score": 1.11,
+      "late_share": 0.292,
+      "top_categories": {
+        "sports_leisure": 26,
+        "health_beauty": 20,
+        "bed_bath_table": 18
+      },
+      "first_month": "2017-02"
+    },
+    {
+      "cluster": 14,
+      "size": 269,
+      "keywords": [
+        "pedido",
+        "recebi pedido",
+        "recebi",
+        "entrega",
+        "pedido entregue",
+        "agora",
+        "encomenda",
+        "contato",
+        "dia",
+        "nada"
+      ],
+      "representative_reviews": [
+        "Até o momento não recebi o pedido, também não recebi informações do atraso de entrega do pedido",
+        "Não recebi o pedido",
+        "Não recebi meu pedido!"
+      ],
+      "avg_review_score": 1.14,
+      "late_share": 0.543,
+      "top_categories": {
+        "bed_bath_table": 29,
+        "health_beauty": 24,
+        "baby": 18
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 15,
+      "size": 323,
+      "keywords": [
+        "unidades",
+        "apenas",
+        "unidade",
+        "02",
+        "somente",
+        "01",
+        "recebi",
+        "recebi apenas",
+        "três",
+        "duas"
+      ],
+      "representative_reviews": [
+        "Comprei duas unidades e recebi apenas uma",
+        "Comprei duas unidades e recebi apenas uma!",
+        "Eu comprei duas unidades e recebi uma unidade"
+      ],
+      "avg_review_score": 1.2,
+      "late_share": 0.053,
+      "top_categories": {
+        "housewares": 40,
+        "furniture_decor": 39,
+        "bed_bath_table": 39
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 16,
+      "size": 156,
+      "keywords": [
+        "relógio",
+        "casio",
+        "caixa",
+        "veio",
+        "recebi relógio",
+        "defeito",
+        "pulseira",
+        "feminino",
+        "falso",
+        "outro"
+      ],
+      "representative_reviews": [
+        "O relógio foi entregue. A máscara que não recebi",
+        "Não foi entregue o relógio",
+        "um relógio dese não compensa sem propósito"
+      ],
+      "avg_review_score": 1.28,
+      "late_share": 0.115,
+      "top_categories": {
+        "watches_gifts": 125,
+        "unknown": 13,
+        "audio": 3
+      },
+      "first_month": "2017-03"
+    },
+    {
+      "cluster": 17,
+      "size": 366,
+      "keywords": [
+        "outro",
+        "diferente",
+        "modelo",
+        "veio",
+        "recebi",
+        "recebi outro",
+        "outra",
+        "errado",
+        "valor",
+        "inferior"
+      ],
+      "representative_reviews": [
+        "Modelo diferente.. comprei o cobertor e veio outro modelo",
+        "Recebi produto de outro cliente totalmente diferente do que comprei...trocaram meu pedido",
+        "nao recomendo. comprei um modelo de relogio e veio outro totalmente diferente"
+      ],
+      "avg_review_score": 1.2,
+      "late_share": 0.085,
+      "top_categories": {
+        "computers_accessories": 45,
+        "health_beauty": 40,
+        "bed_bath_table": 31
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 18,
+      "size": 308,
+      "keywords": [
+        "quebrado",
+        "veio",
+        "quebrada",
+        "chegou",
+        "mal",
+        "defeito",
+        "caixa",
+        "embalagem",
+        "danificado",
+        "embalado"
+      ],
+      "representative_reviews": [
+        "O produto chegou quebrado",
+        "chegou quebrado",
+        "Isso chegou quebrado"
+      ],
+      "avg_review_score": 1.28,
+      "late_share": 0.062,
+      "top_categories": {
+        "housewares": 33,
+        "furniture_decor": 33,
+        "sports_leisure": 20
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 19,
+      "size": 146,
+      "keywords": [
+        "cadeira",
+        "cadeiras",
+        "apenas",
+        "veio",
+        "duas",
+        "base",
+        "quatro",
+        "bebê",
+        "somente",
+        "carrinho"
+      ],
+      "representative_reviews": [
+        "A cadeira veio com problema no assento",
+        "Faltou 01 produto. Comprei 03 cadeiras, foram entregues duas cadeiras (palito) a cadeira rotatória ainda não foi entregue",
+        "Minha cadeira veio com a roda qurbrada"
+      ],
+      "avg_review_score": 1.23,
+      "late_share": 0.089,
+      "top_categories": {
+        "office_furniture": 68,
+        "auto": 25,
+        "furniture_decor": 9
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 20,
+      "size": 268,
+      "keywords": [
+        "recebi",
+        "recebi recebi",
+        "paguei",
+        "entregue recebi",
+        "entregue",
+        "paguei recebi",
+        "recebi mercadoria",
+        "avaliar",
+        "mercadoria",
+        "recebi entregue"
+      ],
+      "representative_reviews": [
+        "Não recebi o produto. Eu não recebi o produto",
+        "nao recebi. nao recebi minha compra",
+        "Não recebi o produto. Não recebi o produto"
+      ],
+      "avg_review_score": 1.13,
+      "late_share": 0.399,
+      "top_categories": {
+        "bed_bath_table": 38,
+        "sports_leisure": 28,
+        "health_beauty": 19
+      },
+      "first_month": "2016-09"
+    },
+    {
+      "cluster": 21,
+      "size": 271,
+      "keywords": [
+        "entregue",
+        "chegou",
+        "entregue entregue",
+        "faltando",
+        "veio",
+        "faltou",
+        "manual",
+        "chegou chegou",
+        "caixa",
+        "entregue chegou"
+      ],
+      "representative_reviews": [
+        "Produto não foi entregue. O produto não foi entregue",
+        "Produto não foi entregue. Produto não foi entregue",
+        "Um produto não entregue. Um produto não entregue"
+      ],
+      "avg_review_score": 1.18,
+      "late_share": 0.351,
+      "top_categories": {
+        "bed_bath_table": 25,
+        "health_beauty": 24,
+        "sports_leisure": 18
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 22,
+      "size": 270,
+      "keywords": [
+        "qualidade",
+        "material",
+        "tecido",
+        "gostei",
+        "melhor",
+        "fino",
+        "péssima",
+        "achei",
+        "plástico",
+        "péssima qualidade"
+      ],
+      "representative_reviews": [
+        "Capa fragil. Nao creio que essa capa vá durar, material mole e de aparência frágil, pelo preço deveria ser melhor",
+        "Não recomendo.. Achei muito fino o tecido a costura e muito simples, sei lá parece feito em casa, a almofada que veio estava com uma linha grande no acabamento, tive que cortar. Não gostei",
+        "Luminárias. Uma das luminárias chegou amassada, mesmo protegida na caixa. O material de alumínio é táo fininho (quase uma casquinha). Quando se le que o material é ^alumínio^ imagina-se de melhor qualidade"
+      ],
+      "avg_review_score": 1.38,
+      "late_share": 0.033,
+      "top_categories": {
+        "bed_bath_table": 105,
+        "furniture_decor": 30,
+        "housewares": 19
+      },
+      "first_month": "2016-10"
+    },
+    {
+      "cluster": 23,
+      "size": 171,
+      "keywords": [
+        "recebi",
+        "recebi recebi",
+        "avaliar",
+        "posso",
+        "posso avaliar",
+        "gostei",
+        "avaliar recebi",
+        "nada",
+        "recebi posso",
+        "agora"
+      ],
+      "representative_reviews": [
+        "não recebi ainda. não recebi",
+        "Mercadoria não entregue. Não posso avaliar o que não recebi",
+        "xxx. Não recebi, não posso avaliar"
+      ],
+      "avg_review_score": 1.16,
+      "late_share": 0.368,
+      "top_categories": {
+        "bed_bath_table": 27,
+        "furniture_decor": 20,
+        "health_beauty": 14
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 24,
+      "size": 252,
+      "keywords": [
+        "dias",
+        "mês",
+        "quase",
+        "prazo",
+        "entrega",
+        "demorou",
+        "quase mês",
+        "chegou",
+        "data",
+        "dia"
+      ],
+      "representative_reviews": [
+        "Não recomendo a empresa, mais de 30 dias e não recebi o produto",
+        "Faz mais de 45 dias que comprei omproduto e não chegou",
+        "Comprei essa bosta faz quase 1 mês e não chegou"
+      ],
+      "avg_review_score": 1.21,
+      "late_share": 0.679,
+      "top_categories": {
+        "health_beauty": 28,
+        "computers_accessories": 23,
+        "sports_leisure": 21
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 25,
+      "size": 159,
+      "keywords": [
+        "cliente",
+        "respeito",
+        "falta",
+        "consumidor",
+        "entrega",
+        "respeito cliente",
+        "falta respeito",
+        "entregam",
+        "empresa",
+        "deveria"
+      ],
+      "representative_reviews": [
+        "acho isso uma falta de respeito com o cliente",
+        "Ruim. Falta de respeito com cliente",
+        "Desrespeito com o cliente. Falta de respeito com o cliente"
+      ],
+      "avg_review_score": 1.2,
+      "late_share": 0.572,
+      "top_categories": {
+        "sports_leisure": 20,
+        "health_beauty": 15,
+        "computers_accessories": 14
+      },
+      "first_month": "2017-02"
+    },
+    {
+      "cluster": 26,
+      "size": 170,
+      "keywords": [
+        "errado",
+        "veio errado",
+        "veio",
+        "defeito",
+        "recebi errado",
+        "veio defeito",
+        "errado veio",
+        "errada",
+        "incorreto",
+        "errado pedi"
+      ],
+      "representative_reviews": [
+        "Desorganização, produto veio errado",
+        "O produto enteque veio Errado",
+        "O produto veio errado"
+      ],
+      "avg_review_score": 1.21,
+      "late_share": 0.071,
+      "top_categories": {
+        "health_beauty": 20,
+        "telephony": 16,
+        "sports_leisure": 14
+      },
+      "first_month": "2017-01"
+    },
+    {
+      "cluster": 27,
+      "size": 137,
+      "keywords": [
+        "faltando",
+        "falta",
+        "veio",
+        "peça",
+        "faltou",
+        "veio faltando",
+        "zero",
+        "entregue",
+        "chegou",
+        "faltando peça"
+      ],
+      "representative_reviews": [
+        "Porem veio faltando uma peça, são dois desenhos grandes dos lados da penteadeira porem veio só um lado. Faltou o desenho da ladybug .. Ou quero peça faltante ou vou devolver... Obrigada",
+        "Veio faltando uma peça",
+        "Veio faltando peça"
+      ],
+      "avg_review_score": 1.24,
+      "late_share": 0.299,
+      "top_categories": {
+        "bed_bath_table": 15,
+        "health_beauty": 13,
+        "watches_gifts": 13
+      },
+      "first_month": "2016-10"
+    }
+  ]
+}

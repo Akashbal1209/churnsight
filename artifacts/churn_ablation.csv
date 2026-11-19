@@ -1,0 +1,4 @@
+variant,n_features,roc_auc,pr_auc,base_rate,lift_top10pct,n_trees
+A. order + delivery only,16,0.5638,0.019,0.0142,1.734,106
+B. + review score,18,0.564,0.0193,0.0142,1.561,50
+"C. + review NLP (topics, sentiment)",27,0.5457,0.0184,0.0142,1.503,113

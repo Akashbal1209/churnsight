@@ -1,0 +1,18 @@
+{
+  "orders_raw": 99441,
+  "orders_delivered": 96470,
+  "orders_with_items": 96470,
+  "reviews_with_text": 40501,
+  "reviews_text_dedup_min2words": 34340,
+  "same_day_second_orders_ignored": 853,
+  "prediction_day": 30,
+  "customers_total": 93350,
+  "customers_observable": 48803,
+  "repurchase_rate_observable": 0.0155,
+  "positives_observable": 758,
+  "excluded_returned_before_t0": 573,
+  "first_orders_not_delivered_by_t0": 4427,
+  "first_reviews_not_visible_by_t0": 3159,
+  "data_start": "2016-09-15",
+  "data_end": "2018-08-29"
+}

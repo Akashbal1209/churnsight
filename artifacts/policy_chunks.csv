@@ -1,0 +1,69 @@
+chunk_id,doc,section,text
+01-delivery-delays#delivery-estimates,Delivery Delays Policy (Aurora Marketplace),Delivery estimates,"Delivery Delays Policy (Aurora Marketplace) - Delivery estimates
+Every order shows an estimated delivery date at checkout. The estimate already includes the seller's handling time and the carrier's transit time."
+01-delivery-delays#when-an-order-is-late,Delivery Delays Policy (Aurora Marketplace),When an order is late,"Delivery Delays Policy (Aurora Marketplace) - When an order is late
+- **Up to 7 days past the estimate:** apologise, share the current tracking status, and confirm a new expected date with the carrier.
+- **More than 7 days past the estimate:** in addition, the customer may receive a **R$20 delay voucher** (code issued by support, valid 60 days, minimum next purchase R$60).
+- **More than 15 days past the estimate, or 30 days after purchase with no delivery:** the customer may choose a **full refund** instead of waiting. See *Order Not Received*."
+01-delivery-delays#what-support-must-not-do,Delivery Delays Policy (Aurora Marketplace),What support must not do,"Delivery Delays Policy (Aurora Marketplace) - What support must not do
+- Do not promise a specific delivery date unless the carrier has confirmed it.
+- Do not blame the carrier publicly; the marketplace is responsible for the customer experience."
+02-order-not-received#opening-an-investigation,Order Not Received Policy (Aurora Marketplace),Opening an investigation,"Order Not Received Policy (Aurora Marketplace) - Opening an investigation
+If tracking shows no movement for 5 business days, or the order is past its estimated date and not delivered, support opens a carrier investigation within **2 business days**."
+02-order-not-received#resolution,Order Not Received Policy (Aurora Marketplace),Resolution,"Order Not Received Policy (Aurora Marketplace) - Resolution
+- If the parcel is confirmed lost or stolen, the customer chooses between **reshipping the same item at no cost** or a **full refund** (product + shipping).
+- Refunds are issued to the original payment method within **10 business days** of the decision. Credit card refunds on installment purchases appear as credits on the next card statements.
+- If the order is more than 30 days old with no delivery, the customer may request a full refund immediately, without waiting for the investigation."
+02-order-not-received#communication,Order Not Received Policy (Aurora Marketplace),Communication,"Order Not Received Policy (Aurora Marketplace) - Communication
+Support updates the customer at least every 3 business days until the case is closed."
+03-returns-refunds#right-of-withdrawal-(any-reason),Returns and Refunds Policy (Aurora Marketplace),Right of withdrawal (any reason),"Returns and Refunds Policy (Aurora Marketplace) - Right of withdrawal (any reason)
+Following Brazil's Consumer Defense Code (CDC, Art. 49), customers may return any item bought online within **7 days of receiving it**, for any reason. Return shipping is free and the refund includes the original shipping cost."
+03-returns-refunds#defective-items,Returns and Refunds Policy (Aurora Marketplace),Defective items,"Returns and Refunds Policy (Aurora Marketplace) - Defective items
+Under CDC Art. 26, customers can claim for defects within **30 days** for non-durable goods and **90 days** for durable goods. Return shipping is free. The customer chooses a **replacement** or a **full refund**."
+03-returns-refunds#refund-timing,Returns and Refunds Policy (Aurora Marketplace),Refund timing,"Returns and Refunds Policy (Aurora Marketplace) - Refund timing
+Refunds are issued to the original payment method within **10 business days** after the returned item reaches the seller, or immediately when no return is required (see *Damaged or Defective Items*)."
+03-returns-refunds#exchanges,Returns and Refunds Policy (Aurora Marketplace),Exchanges,"Returns and Refunds Policy (Aurora Marketplace) - Exchanges
+Exchanges for a different size or colour are handled as a return plus a new order, subject to stock."
+04-damaged-defective#reporting,Damaged or Defective Items Policy (Aurora Marketplace),Reporting,"Damaged or Defective Items Policy (Aurora Marketplace) - Reporting
+Customers should report damage or a defect with **photos** through the order page. Damage visible on arrival (broken item, leaking bottle, crushed box with damaged contents) should be reported within **7 days** of delivery when possible; defects found later follow the CDC deadlines in *Returns and Refunds*."
+04-damaged-defective#resolution,Damaged or Defective Items Policy (Aurora Marketplace),Resolution,"Damaged or Defective Items Policy (Aurora Marketplace) - Resolution
+- The customer chooses a **free replacement** or a **full refund**.
+- For items under **R$50**, the customer does not need to send the item back; the refund or replacement is processed after the photos are reviewed.
+- Suspected counterfeit or non-original items are escalated to the Seller Quality team and the listing is reviewed."
+04-damaged-defective#packaging-only-damage,Damaged or Defective Items Policy (Aurora Marketplace),Packaging-only damage,"Damaged or Defective Items Policy (Aurora Marketplace) - Packaging-only damage
+If only the outer box is damaged and the product works, apologise and record the case against the seller's packaging score. No compensation is required, but a goodwill voucher may be offered under *Retention and Goodwill Offers*."
+05-wrong-missing-items#missing-items-or-partial-deliveries,Wrong or Missing Items Policy (Aurora Marketplace),Missing items or partial deliveries,"Wrong or Missing Items Policy (Aurora Marketplace) - Missing items or partial deliveries
+Orders with several items may ship in separate parcels. Check tracking for each parcel first. If an item is confirmed missing, the seller ships it within **5 business days**, or the customer receives a **partial refund** for that item plus the proportional shipping cost."
+"05-wrong-missing-items#wrong-item,-colour,-size-or-model",Wrong or Missing Items Policy (Aurora Marketplace),"Wrong item, colour, size or model","Wrong or Missing Items Policy (Aurora Marketplace) - Wrong item, colour, size or model
+If the customer received something different from the listing, the seller arranges **free return shipping** and sends the correct item, or the customer receives a **full refund**. The customer chooses."
+05-wrong-missing-items#product-different-from-the-description,Wrong or Missing Items Policy (Aurora Marketplace),Product different from the description,"Wrong or Missing Items Policy (Aurora Marketplace) - Product different from the description
+If the product does not match the listing (material, size, specifications), treat it as a wrong item. The listing is flagged for review by the Seller Quality team."
+06-retention-goodwill#allowed-offers,Retention and Goodwill Offers (Aurora Marketplace),Allowed offers,"Retention and Goodwill Offers (Aurora Marketplace) - Allowed offers
+- **R$15 goodwill voucher:** first-order customers who left a 1-2 star review.
+- **R$30 goodwill voucher:** customers whose order value was **R$300 or more** and who had a negative experience.
+- **R$20 delay voucher:** only for delays of more than 7 days (see *Delivery Delays*). Do not combine it with a goodwill voucher; offer the higher one."
+06-retention-goodwill#rules,Retention and Goodwill Offers (Aurora Marketplace),Rules,"Retention and Goodwill Offers (Aurora Marketplace) - Rules
+- Vouchers are valid for **60 days** with a **minimum next purchase of R$60**.
+- **One goodwill voucher per customer every 6 months.**
+- Never offer cash, discounts on the current order, or amounts other than those listed here.
+- Vouchers complement the resolution (refund, replacement); they never replace it.
+- Customers who are already being refunded for fraud or abuse are not eligible."
+07-seller-communication#seller-response-time,Seller Communication and Escalation (Aurora Marketplace),Seller response time,"Seller Communication and Escalation (Aurora Marketplace) - Seller response time
+Sellers must answer customer messages within **2 business days**."
+07-seller-communication#escalation,Seller Communication and Escalation (Aurora Marketplace),Escalation,"Seller Communication and Escalation (Aurora Marketplace) - Escalation
+If a seller does not answer within 2 business days, or the customer reports that requests for a return, exchange or cancellation were ignored, marketplace support takes over the case and contacts the customer directly within **1 business day**."
+07-seller-communication#cancellations,Seller Communication and Escalation (Aurora Marketplace),Cancellations,"Seller Communication and Escalation (Aurora Marketplace) - Cancellations
+Orders can be cancelled free of charge before shipping. If a cancellation was requested but the item was still delivered, follow *Returns and Refunds* (right of withdrawal) at no cost to the customer."
+07-seller-communication#seller-accountability,Seller Communication and Escalation (Aurora Marketplace),Seller accountability,"Seller Communication and Escalation (Aurora Marketplace) - Seller accountability
+Repeated complaints about the same seller (late shipping, wrong items, no response) are recorded on the seller's quality score and reviewed monthly by the Seller Quality team."
+08-reply-guidelines#language-and-tone,Customer Reply Guidelines (Aurora Marketplace),Language and tone,"Customer Reply Guidelines (Aurora Marketplace) - Language and tone
+- Reply in **Brazilian Portuguese**, in a warm and direct tone.
+- Start with a short, specific apology that names the problem the customer described.
+- Never blame the customer, the carrier or the seller in the reply."
+08-reply-guidelines#content,Customer Reply Guidelines (Aurora Marketplace),Content,"Customer Reply Guidelines (Aurora Marketplace) - Content
+- State the concrete next step and its deadline (for example, ""abriremos uma investigação em até 2 dias úteis"").
+- Offer only resolutions and vouchers that the policies allow, with their exact amounts and conditions.
+- If the case needs information we do not have (photos, order number, address), ask for it explicitly.
+- If the situation is not covered by any policy, or the customer mentions legal action, consumer agencies (Procon) or a health/safety risk, **escalate to a human agent** instead of promising anything."
+08-reply-guidelines#format,Customer Reply Guidelines (Aurora Marketplace),Format,"Customer Reply Guidelines (Aurora Marketplace) - Format
+Three to six sentences. Sign as ""Equipe Aurora""."

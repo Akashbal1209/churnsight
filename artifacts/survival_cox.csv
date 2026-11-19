@@ -1,0 +1,5 @@
+covariate,exp(coef),exp(coef) lower 95%,exp(coef) upper 95%,p
+is_late,0.9209,0.7818,1.0848,0.3243
+freight_ratio,1.0564,0.915,1.2197,0.4543
+low_review,0.8615,0.763,0.9729,0.0162
+log_payment,0.9754,0.9272,1.026,0.3344

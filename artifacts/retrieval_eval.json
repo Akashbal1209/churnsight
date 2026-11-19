@@ -1,0 +1,42 @@
+{
+  "corpus": "250 hand-labelled gold reviews",
+  "n_queries": 16,
+  "summary": [
+    {
+      "config": "BM25 only",
+      "p@5": 0.88,
+      "p@10": 0.73,
+      "mrr": 0.625,
+      "ndcg@10": 0.454,
+      "ndcg@10_en": 0.091,
+      "ndcg@10_pt": 0.817
+    },
+    {
+      "config": "Dense only",
+      "p@5": 0.8,
+      "p@10": 0.738,
+      "mrr": 0.969,
+      "ndcg@10": 0.771,
+      "ndcg@10_en": 0.746,
+      "ndcg@10_pt": 0.795
+    },
+    {
+      "config": "Hybrid (RRF)",
+      "p@5": 0.85,
+      "p@10": 0.738,
+      "mrr": 1.0,
+      "ndcg@10": 0.792,
+      "ndcg@10_en": 0.735,
+      "ndcg@10_pt": 0.85
+    },
+    {
+      "config": "Hybrid + cross-encoder rerank",
+      "p@5": 0.825,
+      "p@10": 0.762,
+      "mrr": 0.875,
+      "ndcg@10": 0.781,
+      "ndcg@10_en": 0.743,
+      "ndcg@10_pt": 0.818
+    }
+  ]
+}
