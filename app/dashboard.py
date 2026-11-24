@@ -19,7 +19,7 @@ import theme as T  # noqa: E402
 from churnsight.config import ARTIFACTS, PROCESSED  # noqa: E402
 from churnsight.llm import client  # noqa: E402
 
-st.set_page_config(page_title="ChurnSight", page_icon="✨", layout="wide")
+st.set_page_config(page_title="ChurnSight", page_icon=str(ROOT / "app" / "favicon.png"), layout="wide")
 T.apply()
 
 
