@@ -46,6 +46,12 @@ impact = load_csv("issue_impact.csv")
 clusters = load_json("complaint_clusters.json") or {"clusters": []}
 seg = load_csv("segment_profiles.csv")
 hist = load_json("alerts_history.json") or []
+# English meaning of the Portuguese reviews we display (display only; all models run on the Portuguese)
+TRANSLATIONS = (load_json("review_translations_en.json") or {}).get("translations", {})
+
+
+def english(text: str) -> str | None:
+    return TRANSLATIONS.get(" ".join(str(text).split()))
 
 PLAIN_TOPIC = {
     "delivery_delay": "Delivery took too long", "not_received": "Order never arrived",
@@ -251,15 +257,20 @@ with tabs[3]:
               "from 5% to 14%. The review system never saw delivery data, yet it flagged exactly those months.")
 
     st.subheader("Biggest complaint groups")
-    shown = 0
+    # The model finds 28 fine-grained clusters; several share a plain-language name, so show one group per name.
+    groups: dict[str, list] = {}
     for cl in sorted(clusters.get("clusters", []), key=lambda c: -c["size"]):
-        if shown == 8:
-            break
-        shown += 1
-        with st.expander(f"{cl.get('plain_name', 'Complaints')} · {cl['size']} reviews"):
-            for q in cl["representative_reviews"][:3]:
-                T.quote(q)
-            st.caption("Reviews are in Portuguese. Key words: " + ", ".join(cl["keywords"][:6]))
+        groups.setdefault(cl.get("plain_name", "Other complaints"), []).append(cl)
+    for name, members in sorted(groups.items(), key=lambda kv: -sum(c["size"] for c in kv[1])):
+        total = sum(c["size"] for c in members)
+        parts = f" ({len(members)} clusters)" if len(members) > 1 else ""
+        with st.expander(f"{name} · {total:,} reviews{parts}"):
+            # one quote from each cluster first, so the examples show the different kinds of complaint
+            quotes = [q for rank in range(3) for c in members for q in c["representative_reviews"][rank:rank + 1]]
+            for q in quotes[:3]:
+                T.quote(q, english(q))
+            words = list(dict.fromkeys(w for c in members for w in c["keywords"][:4] if not w.isdigit()))[:8]
+            st.caption("Quotes in the original Portuguese, English meaning below. Key words: " + ", ".join(words))
 
     with st.expander("Technical details"):
         if nlp_cmp is not None:
@@ -327,7 +338,8 @@ with tabs[5]:
             st.markdown(res.answer)
         st.subheader(f"{len(res.reviews)} matching reviews")
         for r in res.reviews.itertuples():
-            T.quote(f"{r.review_text}  ·  {int(r.review_score)}★ · {r.order_month}")
+            T.quote(r.review_text, english(r.review_text), f"{int(r.review_score)}★ · {r.order_month}")
+        st.caption("Reviews are shown in the original Portuguese (English meaning where we have one).")
     with st.expander("Technical details"):
         ev = load_csv("retrieval_eval.csv", index_col=0)
         if ev is not None:
@@ -354,7 +366,7 @@ with tabs[6]:
         lvl = st.radio("Show", ["high", "medium"], horizontal=True,
                        format_func=lambda v: "Call today" if v == "high" else "Email this week")
         sub = queue[queue["priority"] == lvl].head(200).reset_index(drop=True)
-        labels = [f"{r.review_text[:70]}…  ·  R${r.payment_value:.0f}" for r in sub.itertuples()]
+        labels = [f"{(english(r.review_text) or r.review_text)[:70]}…  ·  R${r.payment_value:.0f}" for r in sub.itertuples()]
         i = st.selectbox("Pick a customer", range(len(sub)), format_func=lambda k: labels[k])
         row = sub.iloc[i]
         from churnsight.llm.actions import Case, suggest
@@ -367,7 +379,7 @@ with tabs[6]:
         left, right = st.columns([1.2, 1])
         with left, T.tile():
             st.subheader("What happened")
-            T.quote(row["review_text"])
+            T.quote(row["review_text"], english(row["review_text"]))
             probs = ", ".join(PLAIN_TOPIC[t] for t in row["topics"] if t in PLAIN_TOPIC) or "general complaint"
             late = "" if pd.isna(row["delay_days"]) or row["delay_days"] <= 0 else f" · {row['delay_days']:.0f} days late"
             st.markdown(f"**{int(row['review_score'])}★** · order of **R${row['payment_value']:.0f}**{late}  \nProblem: **{probs}**")

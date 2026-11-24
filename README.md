@@ -152,5 +152,6 @@ tests/                     unit tests for rules, guardrails, spike detection
 ## Data and licence
 
 - Olist Brazilian E-commerce Public Dataset by Olist, [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/). The slim bundle in `data/app/` is derived from it and shared under the same licence, for non-commercial use.
+- `artifacts/review_translations_en.json` holds English translations of the ~480 Portuguese reviews the dashboard displays (complaint-group quotes and the Action Center queue), made once with an LLM and shown under the original text. They are for readers only: every model, search and metric runs on the Portuguese.
 - `docs/policies/` describes **Aurora Marketplace, a fictional company** invented for this demo. It is not Olist's policy.
 - Gold labels in `data/labels/gold_annotations.txt` were produced with an LLM reading each review against a written guideline, single pass; treat them as a careful but unaudited reference.

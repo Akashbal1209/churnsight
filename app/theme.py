@@ -88,6 +88,8 @@ h3 { font-size: 1.15rem !important; font-weight: 600 !important; }
 .cs-note i { height: 12px; border-left: 2px dashed #333849; }
 @media (max-width: 640px) { .cs-row { grid-template-columns: 1fr 72px !important; }
   .cs-row > .cs-track { grid-column: 1 / -1; order: 3; } }
+.cs-quote .en { font-style: normal; color: #5E6478; font-size: 13px; margin-top: 4px; }
+.cs-quote .meta { font-style: normal; color: #5E6478; font-size: 12px; margin-left: 8px; white-space: nowrap; }
 .cs-quote { background: #F5F6F8; border-radius: 12px; padding: 10px 14px; color: #0F1222; font-style: italic; margin: 6px 0; }
 
 /* ---- Streamlit widgets ---- */
@@ -188,8 +190,11 @@ def step(title: str, detail: str) -> None:
     _md(f'<div class="cs-step"><b>{html.escape(title)}</b><span>{html.escape(detail)}</span></div>')
 
 
-def quote(text: str) -> None:
-    _md(f'<div class="cs-quote">“{html.escape(text)}”</div>')
+def quote(text: str, english: str | None = None, meta: str = "") -> None:
+    """A customer quote in the original Portuguese, with its English meaning underneath when we have one."""
+    en = f'<div class="en">{html.escape(english)}</div>' if english else ""
+    tail = f'<span class="meta">{html.escape(meta)}</span>' if meta else ""
+    _md(f'<div class="cs-quote">“{html.escape(text)}”{tail}{en}</div>')
 
 
 def style(fig: go.Figure, height: int = 340) -> go.Figure:
