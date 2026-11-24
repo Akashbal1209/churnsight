@@ -29,11 +29,13 @@ CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 @keyframes cs-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes cs-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 html, body, [data-testid="stApp"] { font-family: Inter, system-ui, sans-serif; }
 [data-testid="stApp"] { background: #EAF0F8; color: #0F1222; }
 [data-testid="stHeader"] { background: transparent; }
-[data-testid="stMainBlockContainer"] { max-width: 1200px; padding-top: 1.6rem; }
+[data-testid="stMainBlockContainer"] { max-width: 1280px; padding: 1.6rem 3rem 4rem; }
+@media (max-width: 640px) { [data-testid="stMainBlockContainer"] { padding: 1.2rem 1rem 3rem; } }
 h1, h2, h3, [data-testid="stHeadingWithActionElements"] { font-family: 'Space Grotesk', Inter, sans-serif !important;
   letter-spacing: -0.02em; color: #0F1222; }
 h3 { font-size: 1.15rem !important; font-weight: 600 !important; }
@@ -74,21 +76,38 @@ h3 { font-size: 1.15rem !important; font-weight: 600 !important; }
 .cs-insight { background: #FEF3C7; color: #78350F; border-radius: 16px; padding: 14px 16px; font-size: 14px; margin: 6px 0 14px; }
 .cs-step { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 10px 0; font-size: 14px; }
 .cs-step b { flex: 0 0 240px; color: #0F1222; font-weight: 600; } .cs-step span { flex: 1 1 280px; color: #4A5063; }
+/* thin bar rows (label · track · value), like the design demo */
+.cs-bars { display: flex; flex-direction: column; gap: 12px; margin: 4px 0 6px; }
+.cs-row { display: grid; gap: 12px; align-items: center; font-size: 13px; color: #333849; }
+.cs-row b { text-align: right; color: #0F1222; font-weight: 600; }
+.cs-track { position: relative; height: 10px; background: #F0F1F4; border-radius: 5px; }
+.cs-track > span { display: block; height: 10px; border-radius: 5px; transform-origin: left center;
+  animation: cs-grow .9s cubic-bezier(.2,.8,.2,1) both; }
+.cs-track > i { position: absolute; top: -5px; bottom: -5px; border-left: 2px dashed #333849; }
+.cs-note { font-size: 12px; color: #5E6478; margin-top: 12px; display: flex; align-items: center; gap: 8px; }
+.cs-note i { height: 12px; border-left: 2px dashed #333849; }
+@media (max-width: 640px) { .cs-row { grid-template-columns: 1fr 72px !important; }
+  .cs-row > .cs-track { grid-column: 1 / -1; order: 3; } }
 .cs-quote { background: #F5F6F8; border-radius: 12px; padding: 10px 14px; color: #0F1222; font-style: italic; margin: 6px 0; }
 
 /* ---- Streamlit widgets ---- */
 /* tabs as a white pill bar; active tab is a dark pill (new and older Streamlit tab markup) */
 [data-testid="stTabs"] [role="tablist"], [data-baseweb="tab-list"] { gap: 2px; background: #FFFFFF; padding: 5px;
   border-radius: 999px; width: fit-content; max-width: 100%; flex-wrap: wrap; border: 0; margin-bottom: 10px; }
-[data-testid="stTab"], [data-baseweb="tab"] { border-radius: 999px !important; padding: 6px 14px !important;
+[data-testid="stTab"], [data-baseweb="tab"] { border-radius: 999px !important; padding: 6px 12px !important;
   color: #4A5063 !important; height: auto !important; border: 0 !important; background: transparent; }
 [data-testid="stTab"] p, [data-baseweb="tab"] p { font-size: 13px !important; font-weight: 500; }
 [data-testid="stTab"][aria-selected="true"], [data-baseweb="tab"][aria-selected="true"] {
   background: #0F1222 !important; color: #FFFFFF !important; }
 [data-testid="stTab"][aria-selected="true"] p, [data-baseweb="tab"][aria-selected="true"] p { color: #FFFFFF !important; }
+@media (min-width: 1300px) {
+  .cs-brand { margin: 13px 0 -73px; }
+  [data-testid="stTabs"] [role="tablist"], [data-baseweb="tab-list"] { margin-left: auto; }
+}
 [data-baseweb="tab-highlight"], [data-baseweb="tab-border"], [data-testid="stTab"] .react-aria-SelectionIndicator { display: none; }
 /* white tile around charts and lists: `with T.tile():` */
 [class*="st-key-tile_"] { background: #FFFFFF; border-radius: 24px; padding: 18px 20px; }
+[data-testid="stExpander"] { margin-top: 8px; }
 [data-testid="stExpander"] details { background: #FFFFFF; border: 0; border-radius: 16px; }
 [data-testid="stMetric"] { background: #FFFFFF; border-radius: 24px; padding: 12px 16px; }
 </style>
@@ -121,8 +140,7 @@ def tile():
 
 
 def brand() -> None:
-    _md(f'<div class="cs-brand"><span class="logo">{_LOGO}</span><b>ChurnSight</b>'
-        '<small>· what customers say, what they do, who to help first</small></div>')
+    _md(f'<div class="cs-brand"><span class="logo">{_LOGO}</span><b>ChurnSight</b></div>')
 
 
 def hero(title: str, subtitle: str, eyebrow: str = "") -> None:
@@ -145,6 +163,24 @@ def insight(text: str) -> None:
 def action(num: int, title: str, detail: str) -> None:
     _md(f'<div class="cs-action"><span class="num">{num}</span><span><b>{html.escape(title)}</b>'
         f'<div>{html.escape(detail)}</div></span></div>')
+
+
+def bars(rows, color: str = ACCENT, marker: float | None = None, marker_label: str = "",
+         label_width: int = 180) -> None:
+    """Thin horizontal bars: one row per (label, share 0-1, value text[, colour]).
+
+    `marker` draws a dashed reference line at that share (e.g. the average), explained by `marker_label`.
+    """
+    out = []
+    for label, share, text, *rest in rows:
+        colour = rest[0] if rest and rest[0] else color
+        mark = f'<i style="left:{marker * 100:.1f}%"></i>' if marker is not None else ""
+        out.append(f'<div class="cs-row" style="grid-template-columns:{label_width}px 1fr 72px">'
+                   f'<span>{html.escape(label)}</span><div class="cs-track">'
+                   f'<span style="width:{min(max(share, 0), 1) * 100:.1f}%;background:{colour}"></span>{mark}</div>'
+                   f'<b>{html.escape(text)}</b></div>')
+    note = f'<div class="cs-note"><i></i>{html.escape(marker_label)}</div>' if marker is not None and marker_label else ""
+    _md('<div class="cs-bars">' + "".join(out) + "</div>" + note)
 
 
 def step(title: str, detail: str) -> None:

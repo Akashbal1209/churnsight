@@ -82,21 +82,24 @@ with tabs[0]:
     with left, T.tile():
         on, late = eda.get("avg_review_score_on_time", 0), eda.get("avg_review_score_late", 0)
         st.subheader(f"A late parcel drops the rating from {on:.1f} to {late:.1f} stars")
-        fig = go.Figure(go.Bar(x=["Arrived on time", "Arrived late"], y=[on, late], marker_color=[T.GOOD, T.BAD],
-                               text=[f"{on:.1f} ★", f"{late:.1f} ★"], textposition="outside", width=0.5))
-        st.plotly_chart(T.style(fig).update_yaxes(range=[0, 5.5], title="Average stars"), width="stretch")
+        st.caption("Average stars, on time vs late")
+        T.bars([("Arrived on time", on / 5, f"{on:.1f} ★", T.GOOD), ("Arrived late", late / 5, f"{late:.1f} ★", T.BAD)],
+               label_width=130)
+        st.write("")
+        r_on, r_late = eda.get("repurchase_rate_on_time", 0), eda.get("repurchase_rate_late", 0)
+        st.caption("Customers who order again within 7 months")
+        top_rate = max(r_on, r_late) or 1
+        T.bars([("Arrived on time", r_on / top_rate, f"{r_on * 100:.1f} in 100", T.GOOD),
+                ("Arrived late", r_late / top_rate, f"{r_late * 100:.1f} in 100", T.BAD)], label_width=130)
     with right, T.tile():
         st.subheader("What unhappy customers complain about")
         agg = {}
         for cl in clusters.get("clusters", []):
             agg[cl.get("plain_name", "Other complaints")] = agg.get(cl.get("plain_name", "Other complaints"), 0) + cl["size"]
         if agg:
-            s = pd.Series(agg).sort_values()
-            fig = go.Figure(go.Bar(x=s.values, y=s.index, orientation="h", marker_color=T.ACCENT,
-                                   text=[f"{v:,}" for v in s.values], textposition="outside"))
-            # Leave room on the right so the value labels are never cut off.
-            st.plotly_chart(T.style(fig).update_xaxes(title="Unhappy reviews", range=[0, s.max() * 1.2]),
-                            width="stretch")
+            s = pd.Series(agg).sort_values(ascending=False)
+            st.caption("1–2 star reviews, by complaint group")
+            T.bars([(name, v / s.max(), f"{v:,}") for name, v in s.items()])
 
     st.subheader("What we should do")
     a = st.columns(3)
@@ -171,7 +174,7 @@ with tabs[2]:
             xs = [0] + [int(k) for k in gains]
             ys = [0] + [v * 100 for v in gains.values()]
             fig = go.Figure()
-            fig.add_trace(go.Scatter(x=xs, y=ys, mode="lines+markers", name="Our model", line=dict(color=T.ACCENT, width=3),
+            fig.add_trace(go.Scatter(x=xs, y=ys, mode="lines", name="Our model", line=dict(color=T.ACCENT, width=3),
                                      fill="tozeroy", fillcolor="rgba(29,78,216,0.08)"))
             fig.add_trace(go.Scatter(x=[0, 100], y=[0, 100], mode="lines", name="Random guess",
                                      line=dict(color=T.MUTED, dash="dash")))
@@ -232,7 +235,7 @@ with tabs[3]:
             ser = trends[pick] * 100
             fig = go.Figure(go.Bar(x=ser.index, y=ser.values,
                                    marker_color=[T.ALERT if m in alert_months else T.ACCENT_SOFT for m in ser.index],
-                                   hovertemplate="%{x}: %{y:.1f}% of reviews<extra></extra>"))
+                                   marker_cornerradius=4, hovertemplate="%{x}: %{y:.1f}% of reviews<extra></extra>"))
             st.plotly_chart(T.style(fig, 300).update_yaxes(title="% of reviews"), width="stretch")
             st.caption("Amber bars = months when ChurnSight would have warned the team.")
 
@@ -272,15 +275,11 @@ with tabs[4]:
         top = hot.head(10).copy()
         top["name"] = [f"Seller {chr(65 + i)} · {cat.replace('_', ' ')}" for i, cat in enumerate(top["main_category"].fillna("various").replace("unknown", "various"))]
         avg = float(top["complaint_rate"].iloc[0] / top["complaint_rate_vs_platform"].iloc[0])
-        fig = go.Figure(go.Bar(x=top["complaint_rate"] * 100, y=top["name"], orientation="h", marker_color=T.BAD,
-                               text=[f"{v * 10:.0f} in 10" for v in top["complaint_rate"]], textposition="outside"))
-        fig.add_vline(x=avg * 100, line_dash="dash", line_color=T.MUTED, annotation_text="average seller",
-                      annotation_position="bottom right", annotation_font_color=T.MUTED)
         with T.tile():
             st.subheader("Reviews with a complaint, by seller")
-            st.plotly_chart(T.style(fig, 400).update_yaxes(autorange="reversed")
-                            .update_xaxes(title="% of reviews with a complaint", range=[0, top["complaint_rate"].max() * 120]),
-                            width="stretch")
+            T.bars([(name, rate, f"{rate * 10:.0f} in 10") for name, rate in zip(top["name"], top["complaint_rate"])],
+                   color=T.BAD, marker=avg, label_width=260,
+                   marker_label=f"Dashed line = average seller (about {avg * 10:.0f} in 10 reviews)")
     if impact is not None:
         st.subheader("Does a bad first experience stop people coming back?")
         rows = impact[impact["topic"].isin(COMPLAINTS)]
