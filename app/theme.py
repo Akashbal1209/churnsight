@@ -1,6 +1,8 @@
-"""Aurora glass theme for the Streamlit dashboard: animated colour background + glass cards.
+"""Bento "Ocean" theme for the Streamlit dashboard: light blue-grey page, white rounded tiles,
+pastel KPI tiles, one blue accent and a gentle "rise" animation (tiles fade up one by one).
 
 Pure CSS (no JavaScript), so it works on small hosts and inside Streamlit's sandbox.
+Animations replay when a tab is opened and switch off for users who prefer reduced motion.
 """
 
 from __future__ import annotations
@@ -10,107 +12,160 @@ import html
 import plotly.graph_objects as go
 import streamlit as st
 
-PURPLE, TEAL, PINK, AMBER, RED, GREEN = "#AFA9EC", "#5DCAA5", "#ED93B1", "#FAC775", "#F09595", "#97C459"
-TEXT, MUTED = "#F4F2FF", "#B9B4D9"
+# ---- palette -------------------------------------------------------------------------------
+ACCENT, ACCENT_DARK, ACCENT_SOFT = "#1D4ED8", "#1E40AF", "#BFD3F8"
+GOOD, BAD, WARN, ALERT = "#047857", "#E11D48", "#B45309", "#F59E0B"
+TEXT, BODY, MUTED, FAINT = "#0F1222", "#333849", "#5E6478", "#8E93A4"
+PAGE, TILE, TRACK, LINE = "#EAF0F8", "#FFFFFF", "#F0F1F4", "#E3E5EA"
+# pastel fills for KPI tiles (cycle through them in a row)
+BLUE_T, MINT_T, LILAC_T, CREAM_T = "#DBEAFE", "#D9F5EF", "#EDE9FE", "#FEF3C7"
+TINTS = [BLUE_T, MINT_T, LILAC_T, CREAM_T]
+
+# Older names, kept so existing code keeps working.
+PURPLE, TEAL, PINK, AMBER, RED, GREEN = ACCENT, GOOD, "#7C3AED", WARN, BAD, GOOD
 
 CSS = """
 <style>
-[data-testid="stApp"] { background: #15102B; }
-[data-testid="stApp"]::before {
-  content: ""; position: fixed; inset: -25%; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(circle at 20% 25%, rgba(127,119,221,0.55), transparent 38%),
-    radial-gradient(circle at 80% 20%, rgba(29,158,117,0.40), transparent 36%),
-    radial-gradient(circle at 60% 85%, rgba(212,83,126,0.38), transparent 40%),
-    radial-gradient(circle at 10% 90%, rgba(55,138,221,0.30), transparent 35%);
-  filter: blur(30px);
-  animation: aurora 26s ease-in-out infinite alternate;
-}
-@keyframes aurora {
-  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
-  33%  { transform: translate(6%, -4%) rotate(8deg) scale(1.08); }
-  66%  { transform: translate(-5%, 5%) rotate(-6deg) scale(1.04); }
-  100% { transform: translate(3%, 3%) rotate(4deg) scale(1.1); }
-}
-@media (prefers-reduced-motion: reduce) { [data-testid="stApp"]::before { animation: none; } }
-[data-testid="stHeader"], [data-testid="stMain"], [data-testid="stAppViewContainer"] { background: transparent; }
-[data-testid="stMainBlockContainer"] { position: relative; z-index: 1; max-width: 1200px; padding-top: 2rem; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
-.glass {
-  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 16px; padding: 16px 18px; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  height: 100%; min-height: 122px; box-sizing: border-box;
-}
-.glass .lbl { color: #B9B4D9; font-size: 13px; }
-.glass .val { color: #FFFFFF; font-size: 30px; font-weight: 600; line-height: 1.2; margin: 2px 0; }
-.glass .note { color: #CFCBEA; font-size: 13px; }
-.hero h1 { color: #FFFFFF; font-size: 34px; font-weight: 700; line-height: 1.2; margin: 0 0 6px; }
-.hero p { color: #CFCBEA; font-size: 16px; margin: 0; }
-.brand { display:flex; align-items:center; gap:10px; color:#FFFFFF; font-size:18px; font-weight:600; margin-bottom: 18px; }
-.brand span.dot { width:28px; height:28px; border-radius:8px; background: linear-gradient(135deg,#7F77DD,#D4537E); display:inline-block; }
-.brand small { color:#B9B4D9; font-weight:400; font-size:13px; }
-.insight { border-left: 3px solid #FAC775; border-radius: 0; padding: 4px 0 4px 12px; color:#F4F2FF; font-size: 15px; margin: 6px 0 14px; }
-.action { display:flex; gap:12px; align-items:flex-start; }
-.action .num { flex:none; width:28px; height:28px; border-radius:50%; background:#FAC775; color:#412402; font-weight:700; display:flex; align-items:center; justify-content:center; }
-.action b { color:#FFFFFF; } .action div { color:#CFCBEA; font-size: 14px; }
-.quote { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 8px 12px; color:#E9E6FF; font-style: italic; margin: 6px 0; }
+@keyframes cs-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-[data-baseweb="tab-list"] { gap: 6px; background: rgba(255,255,255,0.06); padding: 6px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); }
-[data-baseweb="tab"] { border-radius: 10px !important; padding: 6px 14px !important; color: #CFCBEA !important; }
-[data-baseweb="tab"][aria-selected="true"] { background: rgba(255,255,255,0.16) !important; color: #FFFFFF !important; }
-[data-baseweb="tab-highlight"], [data-baseweb="tab-border"] { display: none; }
-[data-testid="stExpander"] details { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; }
-[data-testid="stMetric"] { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; padding: 12px 16px; }
-[data-testid="stVerticalBlockBorderWrapper"] { background: rgba(255,255,255,0.06); border-radius: 16px; }
+html, body, [data-testid="stApp"] { font-family: Inter, system-ui, sans-serif; }
+[data-testid="stApp"] { background: #EAF0F8; color: #0F1222; }
+[data-testid="stHeader"] { background: transparent; }
+[data-testid="stMainBlockContainer"] { max-width: 1200px; padding-top: 1.6rem; }
+h1, h2, h3, [data-testid="stHeadingWithActionElements"] { font-family: 'Space Grotesk', Inter, sans-serif !important;
+  letter-spacing: -0.02em; color: #0F1222; }
+h3 { font-size: 1.15rem !important; font-weight: 600 !important; }
+
+/* ---- rise: tiles and columns fade up one by one (replays when a tab opens) ---- */
+.cs-tile, .cs-hero, .cs-action, .cs-insight, [class*="st-key-tile_"], [data-testid="stExpander"],
+[data-testid="stHorizontalBlock"] > * { animation: cs-rise .55s cubic-bezier(.2,.7,.2,1) both; }
+[data-testid="stHorizontalBlock"] > :nth-child(2) { animation-delay: .07s; }
+[data-testid="stHorizontalBlock"] > :nth-child(3) { animation-delay: .14s; }
+[data-testid="stHorizontalBlock"] > :nth-child(4) { animation-delay: .21s; }
+[data-testid="stHorizontalBlock"] > :nth-child(5) { animation-delay: .28s; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ---- brand + headline ---- */
+.cs-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.cs-brand .logo { width: 34px; height: 34px; border-radius: 12px; background: #0F1222;
+  display: flex; align-items: center; justify-content: center; }
+.cs-brand b { font-family: 'Space Grotesk', sans-serif; font-size: 19px; letter-spacing: -0.02em; color: #0F1222; }
+.cs-brand small { color: #5E6478; font-size: 13px; }
+.cs-hero .eyebrow { display: inline-block; font-size: 12px; font-weight: 600; color: #1E40AF; background: #DBEAFE;
+  padding: 4px 10px; border-radius: 999px; margin-bottom: 12px; }
+.cs-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 36px; line-height: 1.1; font-weight: 600;
+  letter-spacing: -0.03em; color: #0F1222; margin: 0 0 8px; padding: 0; }
+.cs-hero p { color: #4A5063; font-size: 15px; margin: 0; max-width: 720px; }
+
+/* ---- tiles ---- */
+.cs-tile { background: #FFFFFF; border-radius: 24px; padding: 18px 20px; height: 100%; min-height: 122px;
+  box-sizing: border-box; }
+.cs-tile .lbl { color: #5E6478; font-size: 13px; }
+.cs-tile .val { font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 600; letter-spacing: -0.03em;
+  line-height: 1.15; margin: 4px 0; color: #0F1222; }
+.cs-tile .note { color: #5E6478; font-size: 13px; }
+.cs-action { background: #FFFFFF; border-radius: 24px; padding: 18px; display: flex; gap: 12px; height: 100%;
+  box-sizing: border-box; }
+.cs-action .num { flex: none; width: 28px; height: 28px; border-radius: 50%; background: #DBEAFE; color: #1E40AF;
+  font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+.cs-action b { color: #0F1222; font-size: 14px; } .cs-action div { color: #5E6478; font-size: 13px; margin-top: 4px; }
+.cs-insight { background: #FEF3C7; color: #78350F; border-radius: 16px; padding: 14px 16px; font-size: 14px; margin: 6px 0 14px; }
+.cs-step { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 10px 0; font-size: 14px; }
+.cs-step b { flex: 0 0 240px; color: #0F1222; font-weight: 600; } .cs-step span { flex: 1 1 280px; color: #4A5063; }
+.cs-quote { background: #F5F6F8; border-radius: 12px; padding: 10px 14px; color: #0F1222; font-style: italic; margin: 6px 0; }
+
+/* ---- Streamlit widgets ---- */
+/* tabs as a white pill bar; active tab is a dark pill (new and older Streamlit tab markup) */
+[data-testid="stTabs"] [role="tablist"], [data-baseweb="tab-list"] { gap: 2px; background: #FFFFFF; padding: 5px;
+  border-radius: 999px; width: fit-content; max-width: 100%; flex-wrap: wrap; border: 0; margin-bottom: 10px; }
+[data-testid="stTab"], [data-baseweb="tab"] { border-radius: 999px !important; padding: 6px 14px !important;
+  color: #4A5063 !important; height: auto !important; border: 0 !important; background: transparent; }
+[data-testid="stTab"] p, [data-baseweb="tab"] p { font-size: 13px !important; font-weight: 500; }
+[data-testid="stTab"][aria-selected="true"], [data-baseweb="tab"][aria-selected="true"] {
+  background: #0F1222 !important; color: #FFFFFF !important; }
+[data-testid="stTab"][aria-selected="true"] p, [data-baseweb="tab"][aria-selected="true"] p { color: #FFFFFF !important; }
+[data-baseweb="tab-highlight"], [data-baseweb="tab-border"], [data-testid="stTab"] .react-aria-SelectionIndicator { display: none; }
+/* white tile around charts and lists: `with T.tile():` */
+[class*="st-key-tile_"] { background: #FFFFFF; border-radius: 24px; padding: 18px 20px; }
+[data-testid="stExpander"] details { background: #FFFFFF; border: 0; border-radius: 16px; }
+[data-testid="stMetric"] { background: #FFFFFF; border-radius: 24px; padding: 12px 16px; }
 </style>
 """
 
+_LOGO = ('<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" '
+         'stroke-linecap="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/>'
+         '<rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/>'
+         '<rect x="14" y="14" width="7" height="7" rx="2"/></svg>')
+
+
+def _md(markup: str) -> None:
+    st.markdown(markup, unsafe_allow_html=True)
+
+
+_tiles = 0
+
 
 def apply() -> None:
-    st.markdown(CSS, unsafe_allow_html=True)
+    global _tiles
+    _tiles = 0  # stable tile keys on every rerun, so tiles don't remount on each click
+    _md(CSS)
+
+
+def tile():
+    """A white rounded tile for charts and lists:  `with T.tile(): st.plotly_chart(...)`."""
+    global _tiles
+    _tiles += 1
+    return st.container(key=f"tile_{_tiles}")
 
 
 def brand() -> None:
-    st.markdown('<div class="brand"><span class="dot"></span>ChurnSight '
-                '<small>· what customers say, what they do, who to help first</small></div>', unsafe_allow_html=True)
+    _md(f'<div class="cs-brand"><span class="logo">{_LOGO}</span><b>ChurnSight</b>'
+        '<small>· what customers say, what they do, who to help first</small></div>')
 
 
-def hero(title: str, subtitle: str) -> None:
-    st.markdown(f'<div class="hero"><h1>{html.escape(title)}</h1><p>{html.escape(subtitle)}</p></div>',
-                unsafe_allow_html=True)
+def hero(title: str, subtitle: str, eyebrow: str = "") -> None:
+    tag = f'<span class="eyebrow">{html.escape(eyebrow)}</span>' if eyebrow else ""
+    _md(f'<div class="cs-hero">{tag}<h1>{html.escape(title)}</h1><p>{html.escape(subtitle)}</p></div>')
     st.write("")
 
 
-def card(label: str, value: str, note: str = "", color: str = "#FFFFFF") -> None:
-    st.markdown(
-        f'<div class="glass"><div class="lbl">{html.escape(label)}</div>'
+def card(label: str, value: str, note: str = "", color: str = TEXT, tint: str = TILE) -> None:
+    """A tile with a big number. `tint` gives KPI rows their pastel fill (see TINTS)."""
+    _md(f'<div class="cs-tile" style="background:{tint}"><div class="lbl">{html.escape(label)}</div>'
         f'<div class="val" style="color:{color}">{html.escape(value)}</div>'
-        f'<div class="note">{html.escape(note)}</div></div>', unsafe_allow_html=True)
+        f'<div class="note">{html.escape(note)}</div></div>')
 
 
 def insight(text: str) -> None:
-    st.markdown(f'<div class="insight">{html.escape(text)}</div>', unsafe_allow_html=True)
+    _md(f'<div class="cs-insight">{html.escape(text)}</div>')
 
 
 def action(num: int, title: str, detail: str) -> None:
-    st.markdown(f'<div class="glass action"><span class="num">{num}</span><span><b>{html.escape(title)}</b>'
-                f'<div>{html.escape(detail)}</div></span></div>', unsafe_allow_html=True)
+    _md(f'<div class="cs-action"><span class="num">{num}</span><span><b>{html.escape(title)}</b>'
+        f'<div>{html.escape(detail)}</div></span></div>')
+
+
+def step(title: str, detail: str) -> None:
+    """One row of a list inside a tile: bold title on the left, plain-language detail on the right."""
+    _md(f'<div class="cs-step"><b>{html.escape(title)}</b><span>{html.escape(detail)}</span></div>')
 
 
 def quote(text: str) -> None:
-    st.markdown(f'<div class="quote">“{html.escape(text)}”</div>', unsafe_allow_html=True)
+    _md(f'<div class="cs-quote">“{html.escape(text)}”</div>')
 
 
 def style(fig: go.Figure, height: int = 340) -> go.Figure:
-    """Transparent, light-text Plotly styling that sits on the aurora background."""
+    """Clean light Plotly styling that sits inside a white tile."""
     fig.update_layout(
         height=height, paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color=TEXT, size=13), margin=dict(l=10, r=60, t=30, b=10),
-        colorway=[PURPLE, TEAL, PINK, AMBER, "#85B7EB", GREEN],
+        font=dict(family="Inter, sans-serif", color=BODY, size=13), margin=dict(l=10, r=60, t=30, b=10),
+        colorway=[ACCENT, GOOD, "#7C3AED", ALERT, "#0EA5E9", BAD],
         legend=dict(bgcolor="rgba(0,0,0,0)", orientation="h", y=1.12, x=0),
-        hoverlabel=dict(bgcolor="#2A2250", font_color=TEXT),
+        hoverlabel=dict(bgcolor=TILE, bordercolor=LINE, font_color=TEXT),
     )
     fig.update_traces(cliponaxis=False, selector=dict(type="bar"))
-    fig.update_xaxes(gridcolor="rgba(255,255,255,0.10)", zerolinecolor="rgba(255,255,255,0.2)", color=MUTED)
-    fig.update_yaxes(gridcolor="rgba(255,255,255,0.10)", zerolinecolor="rgba(255,255,255,0.2)", color=MUTED)
+    fig.update_xaxes(gridcolor=TRACK, zerolinecolor=LINE, linecolor=LINE, color=MUTED)
+    fig.update_yaxes(gridcolor=TRACK, zerolinecolor=LINE, linecolor=LINE, color=MUTED)
     return fig

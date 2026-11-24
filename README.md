@@ -6,7 +6,7 @@
 
 ![ChurnSight dashboard](artifacts/figures/dashboard_overview.jpg)
 
-The dashboard is written for non-technical readers: every page opens with one plain-language headline, and the model metrics sit behind "Technical details". Theme: animated aurora background with glass cards (pure CSS).
+The dashboard is written for non-technical readers: every page opens with one plain-language headline, and the model metrics sit behind "Technical details". Theme: light "Bento Ocean" look (white rounded tiles, pastel KPI cards, one blue accent) with a gentle fade-up animation, in pure CSS (`app/theme.py`).
 
 Built on the public [Olist Brazilian E-commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (~100k orders, 2016–2018, reviews in Portuguese).
 
